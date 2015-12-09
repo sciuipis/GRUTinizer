@@ -56,7 +56,7 @@ void TGretinaHit::BuildFrom(const TRawEvent::GEBBankType1& raw){
   //std::cout << "-------------------------------------------------" << std::endl;
   //std::cout << raw << std::endl;
   Clear();
-
+ 
   fTimeStamp = raw.timestamp;
   fWalkCorrection = raw.t0;
   fCrystalId = raw.crystal_id;
@@ -67,6 +67,11 @@ void TGretinaHit::BuildFrom(const TRawEvent::GEBBankType1& raw){
   }
 
   fNumberOfInteractions = raw.num;
+
+  fPad = raw.pad;
+  if(fPad>5)
+    return;
+
 
   float first_interaction_value  = -1e99;
   float second_interaction_value = -1e99;
@@ -295,6 +300,8 @@ void TGretinaHit::Print(Option_t *opt) const {
 
 void TGretinaHit::Clear(Option_t *opt) {
   TDetectorHit::Clear(opt);
+
+  fPad = 0;
 
   fTimeStamp      = -1;
   fWalkCorrection = 0.00;

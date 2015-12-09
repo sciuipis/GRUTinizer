@@ -92,6 +92,8 @@ public:
 
   //void SetPosition(TVector3 &vec) { fCorePosition = vec; }
 
+  Int_t GetPad() const { return fPad; }
+
 private:
   void SortHits();
 
@@ -125,6 +127,8 @@ private:
   TVector3 fLocalInteractionPosition[MAXHPGESEGMENTS]; //[fNumberOfInteractions]
   Float_t  fInteractionEnergy[MAXHPGESEGMENTS]; //[fNumberOfInteractions]
   Float_t  fInteractionFraction[MAXHPGESEGMENTS]; //[fNumberOfInteractions]
+
+  Int_t fPad;
 
   ClassDef(TGretinaHit,3)
 };
