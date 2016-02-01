@@ -11,11 +11,14 @@ TS800Selector::TS800Selector() {
 
 
 void TS800Selector::Begin(TTree *tree) {
-  tree->SetBranchAddress("TS800",&s800);
   pid = new TH2I("s800pid","s800pid",2000,0,2000,4000,0,8000);
 }
 
-void TS800Selector::Init(TTree*)      { printf("Init has been called.\n"); }
+void TS800Selector::Init(TTree *tree)      { 
+  tree->SetBranchAddress("TS800",&s800);
+  printf("Init has been called.\n"); 
+}
+
 
 bool TS800Selector::Notify()          { printf("Notify has been called.\n");  return true;}
 
