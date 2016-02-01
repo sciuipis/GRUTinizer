@@ -102,7 +102,6 @@ class TTof : public TDetectorHit { // S800 Time of Flight
     short GetTacOBJ()                     { return ftac_obj;}  // tac!
     short GetTacXFP()                     { return ftac_xfp;}  // tac!
 
-
     virtual void Copy(TObject &)         const;
     virtual void Print(Option_t *opt="") const;
     virtual void Clear(Option_t *opt="");
@@ -116,6 +115,10 @@ class TTof : public TDetectorHit { // S800 Time of Flight
     short fsi;
     short ftac_obj;
     short ftac_xfp;
+
+    //bool   fTofTacCorrSet; //!
+    //float  fTofTacCorr;    //!
+
 
   ClassDef(TTof,1);
 };
@@ -254,6 +257,11 @@ class TIonChamber : public TDetectorHit {
     std::vector<int> fChan;
     std::vector<int> fData;
     //float            fdE;   //!          Average of all fData.
+    
+    //bool  fIonSumSet;  //!
+    //float fIonSum;     //!
+    
+
     ClassDef(TIonChamber,1)
 };
 
