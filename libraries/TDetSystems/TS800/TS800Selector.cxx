@@ -29,6 +29,7 @@ bool TS800Selector::Notify() {
 }
 
 bool TS800Selector::Process(Long64_t entry) { 
+  printf("process called.\n");
   fChain->GetEntry(entry);
   pid->Fill(s800->GetCorrTOF_OBJTAC(),s800->GetIonChamber().GetSum()); 
   return true;
