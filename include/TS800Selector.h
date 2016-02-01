@@ -18,8 +18,11 @@ class TS800Selector : public TSelector {
     void Begin(TTree*)      ; 
     void Init(TTree*)       ; 
     bool Notify()           ; 
-    bool Process(Long64_t)  ; 
     void Terminate()        ; 
+    
+    Bool_t Process(Long64_t); 
+    Bool_t ProcessCut(Long64_t); 
+    void   ProcessFill(Long64_t); 
   
   private:
     TH2I *pid;

@@ -28,14 +28,21 @@ bool TS800Selector::Notify() {
   return true;
 }
 
-bool TS800Selector::Process(Long64_t entry) { 
+Bool_t TS800Selector::Process(Long64_t entry) { 
   printf("process called.\n");
-  fChain->GetEntry(entry);
+  fChain->GetTree()->GetEntry(entry);
   pid->Fill(s800->GetCorrTOF_OBJTAC(),s800->GetIonChamber().GetSum()); 
   return true;
 }
 
+Bool_t TS800Selector::ProcessCut(Long64_t entry) {
+  printf("process cut called.\n");
+  return true;
+}
 
+void TS800Selector::ProcessFill(Long64_t entry) {
+  printf("process fill called.\n");
+}
 
 void TS800Selector::Terminate()       { 
   if(!gPad || !gPad->IsEditable()) {
