@@ -1,7 +1,7 @@
 
 #include <cstdio>
 
-#include <TTree.h>
+#include <TChain.h>
 #include <TSelector.h>
 #include <TH2I.h>
 
@@ -26,6 +26,8 @@ class TS800Selector : public TSelector {
     TS800 *s800;    
     //double ionsum;
     //double objtac;
+
+    TChain *fChain=0;
 
   ClassDef(TS800Selector,0)
 };
