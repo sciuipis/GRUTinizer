@@ -8,6 +8,9 @@
 
 #include "TGEBEvent.h"
 
+#include <random>
+#include <chrono>
+
 
 std::map<int,TVector3> TCagra::detector_positions;
 
@@ -32,6 +35,38 @@ void TCagra::InsertHit(const TDetectorHit& hit){
   fSize++;
 }
 
+unsigned int GetRandomCAGRAChannel() {
+  // Board ids  101-108 90deg Yale clovers + BGO
+  //            109,110 135deg Yale clovers + BGO
+  //            111-114 135deg IMP clovers + BGO
+  // Channel ids
+  //            Yale    1 digitizer per clover
+  //                    0-3 core signals
+  //                    4 - L, 5 - M, 6 - R
+  //                    7 - BGO
+  //
+  //            IMP     2 digitizers per clover
+  //                    0,5 - core signals
+  //                    1-4,6-9, 4 signals
+  static std::mt19937 mt(std::chrono::system_clock::now().time_since_epoch().count());
+  static std::uniform_int_distribution<> board(101,114);
+  static std::uniform_real_distribution<float> channel(0,1);
+  unsigned int board_id = board(mt);
+  unsigned int chan_id = 0; // channel(mt);
+
+  if (board_id > 110) {
+    chan_id = channel(mt)*10;
+  } else {
+    chan_id = channel(mt)*8;
+  }
+  std::cout << board_id << " " << chan_id << std::endl;
+  std::cout << std::hex << ((1<<24) + (board_id << 8) + chan_id) << std::endl;
+  std::cin.get();
+  return ((1<<24) + (board_id << 8) + chan_id);
+
+
+}
+
 int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
   for (auto& event : raw_data) {
     SetTimestamp(event.GetTimestamp());
@@ -43,13 +78,21 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
                              (anl.GetBoardID() << 8) +
                              anl.GetChannel() );
 
+    address = GetRandomCAGRAChannel();
+
     TChannel* chan = TChannel::GetChannel(address);
+
+    auto boardnum = (address&0x0000ff00)>>8;
+    auto channum = (address&0x000000ff)>>0;
 
     static int lines_displayed = 0;
     if(!chan){
       if(lines_displayed < 10) {
+        // std::cout << "Unknown (board id, channel): ("
+        //           << anl.GetBoardID() << ", " << anl.GetChannel()
+        //           << ")" << std::endl;
         std::cout << "Unknown (board id, channel): ("
-                  << anl.GetBoardID() << ", " << anl.GetChannel()
+                  << boardnum << ", " << channum
                   << ")" << std::endl;
       } else if(lines_displayed==1000){
         std::cout << "I'm going to stop telling you that the channel was unknown,"

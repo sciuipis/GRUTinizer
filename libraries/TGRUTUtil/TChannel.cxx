@@ -342,6 +342,7 @@ const std::vector<double>& TChannel::GetPoleZeroCoeff(double timestamp) const {
       return coeff_time.coefficients;
     }
   }
+  printf("got here!");
   // Should never reach here, but just in case.
   return empty_vec;
 }
