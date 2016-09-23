@@ -518,49 +518,49 @@ BGO08XP00 {
 
 //---------------------------  Digitizer 110 (0x6E) for Clover 9 ---------------------------
 
-CLO91AP00 {
+CLO09AP00 {
   Address: 0x01006E00
   EnergyCoeff: 0 1
   PoleZero: 1
 }
 
-CLO91BP00 {
+CLO09BP00 {
   Address: 0x01006E01
   EnergyCoeff: 0 1
   PoleZero: 1
 }
 
-CLO91CP00 {
+CLO09CP00 {
   Address: 0x01006E02
   EnergyCoeff: 0 1
   PoleZero: 1
 }
 
-CLO91DP00 {
+CLO09DP00 {
   Address: 0x01006E03
   EnergyCoeff: 0 1
   PoleZero: 1
 }
 
-CLO91LN01 {
+CLO09LN01 {
   Address: 0x01006E04
   EnergyCoeff: 0 1
   PoleZero: 1
 }
 
-CLO91MN02 {
+CLO09MN02 {
   Address: 0x01006E05
   EnergyCoeff: 0 1
   PoleZero: 1
 }
 
-CLO91RN03 {
+CLO09RN03 {
   Address: 0x01006E06
   EnergyCoeff: 0 1
   PoleZero: 1
 }
 
-BLO91XP00 {
+BLO09XP00 {
   Address: 0x01006E07
   EnergyCoeff: 0 1
   PoleZero: 1

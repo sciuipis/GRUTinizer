@@ -143,7 +143,7 @@ Int_t TCagraHit::Charge() const {
 }
 
 Double_t TCagraHit::GetCorrectedEnergy(Double_t asym_bl) {
-  std::cout << fAddress << std::endl;
+  std::cout << "TCagraHit::GetCorrectedEnergy address: " << std::hex << fAddress << std::dec << std::endl;
   TChannel* chan = TChannel::GetChannel(fAddress);
   Double_t Energy = 0;
   if(!chan){

@@ -35,7 +35,7 @@ void TCagra::InsertHit(const TDetectorHit& hit){
   fSize++;
 }
 
-unsigned int GetRandomCAGRAChannel() {
+unsigned int GetRandomCAGRAChannel(const int detnum, const char leaf) {
   // Board ids  101-108 90deg Yale clovers + BGO
   //            109,110 135deg Yale clovers + BGO
   //            111-114 135deg IMP clovers + BGO
@@ -51,23 +51,69 @@ unsigned int GetRandomCAGRAChannel() {
   static std::mt19937 mt(std::chrono::system_clock::now().time_since_epoch().count());
   static std::uniform_int_distribution<> board(101,114);
   static std::uniform_real_distribution<float> channel(0,1);
-  unsigned int board_id = board(mt);
-  unsigned int chan_id = 0; // channel(mt);
 
-  if (board_id > 110) {
-    chan_id = channel(mt)*10;
+
+  unsigned int board_id = 0;
+  unsigned int chan_id = 0; // channel(mt);
+  unsigned int address = 0xeeeeeeee;
+
+  if (detnum == -1 && leaf == -1) {
+    // asking for a random detector (clover and leaf)
+    do {
+      board_id = board(mt);
+      if (board_id > 110) {
+        chan_id = channel(mt)*10;
+      } else {
+        chan_id = channel(mt)*8;
+      }
+      address = ((1<<24) + (board_id << 8) + chan_id);
+
+      std::cout << "Parent: ";
+      std::cout << TChannel::Get(address)->GetArrayPosition() << " ";
+      std::cout << TChannel::Get(address)->GetArraySubposition() << " ";
+      std::cout << TChannel::Get(address)->GetSegment() << std::endl;
+    } while (TChannel::Get(address)->GetSegment() != 0);
+
+
+
   } else {
-    chan_id = channel(mt)*8;
+
+    // asking for a segment of specified detector
+    do {
+      board_id = board(mt);
+      if (board_id > 110) {
+        chan_id = channel(mt)*10;
+      } else {
+        chan_id = channel(mt)*8;
+      }
+      address = ((1<<24) + (board_id << 8) + chan_id);
+
+      std::cout << "  Segment: ";
+      std::cout << TChannel::Get(address)->GetArrayPosition() << " ";
+      std::cout << TChannel::Get(address)->GetArraySubposition() << " ";
+      std::cout << TChannel::Get(address)->GetSegment() << std::endl;;
+
+    } while (!(TChannel::Get(address)->GetArrayPosition() == detnum &&
+               *TChannel::Get(address)->GetArraySubposition() == leaf)
+      );
+    std::cout << "Found!" << std::endl;
+
   }
-  std::cout << board_id << " " << chan_id << std::endl;
-  std::cout << std::hex << ((1<<24) + (board_id << 8) + chan_id) << std::endl;
-  std::cin.get();
-  return ((1<<24) + (board_id << 8) + chan_id);
+
+
+
+  //std::cout << board_id << " " << chan_id << std::endl;
+  //std::cout << std::hex << ((1<<24) + (board_id << 8) + chan_id) << std::endl;
+  return address;
 
 
 }
 
 int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
+  static std::mt19937 mt(std::chrono::system_clock::now().time_since_epoch().count());
+  static std::uniform_real_distribution<float> random(0,1);
+
+  unsigned int count = 0;
   for (auto& event : raw_data) {
     SetTimestamp(event.GetTimestamp());
 
@@ -78,7 +124,25 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
                              (anl.GetBoardID() << 8) +
                              anl.GetChannel() );
 
-    address = GetRandomCAGRAChannel();
+
+
+    static int prev_detnum = -1;
+    static char prev_leaf = -1;
+
+    if (random(mt) < 0.2 || count == 0) {
+      // pick new clover and leaf
+      address = GetRandomCAGRAChannel(-1,-1);
+      prev_detnum = TChannel::Get(address)->GetArrayPosition();
+      prev_leaf = *TChannel::Get(address)->GetArraySubposition();
+
+    } else {
+      // use previous clover and leaf
+      address = GetRandomCAGRAChannel(prev_detnum,prev_leaf);
+
+
+
+    }
+
 
     TChannel* chan = TChannel::GetChannel(address);
 
@@ -103,6 +167,7 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
       continue;
     }
 
+
     int detnum = chan->GetArrayPosition(); // clover number
     char leaf = *chan->GetArraySubposition(); // clover number
     int segnum = chan->GetSegment(); // segment number
@@ -115,11 +180,16 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
         break;
       }
     }
+
+
     if(hit == NULL){
       cagra_hits.emplace_back();
       hit = &cagra_hits.back();
       fSize++;
     }
+
+
+
 
     if(segnum==0){
       hit->SetAddress(address);
@@ -131,10 +201,12 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
       hit->SetPostRise(anl.GetPostE());
       hit->SetFlags(anl.GetFlags());
       hit->SetBaseSample(anl.GetBaseSample());
+      std::cout << "Count: " << count << " Address: " << std::hex << hit->Address() << std::dec << std::endl;
     } else {
       TCagraSegmentHit& seg = hit->MakeSegmentByAddress(address);
       seg.SetCharge(anl.GetEnergy());
       seg.SetTimestamp(event.GetTimestamp());
+      std::cout << "Count: " << count << " Seg. Address: " << std :: hex << seg.Address() << std::dec << std::endl;
       // TODO: the following need implementation
       //seg.SetDiscTime(anl.GetCFD());
       //seg->SetPreRise(anl.GetPreE());
@@ -143,14 +215,17 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
       //seg->SetBaseSample(anl.GetBaseSample());
       seg.SetTrace(anl.GetTrace());
     }
+    count++;
   }
-
 
 
   //TCagraHit hit;
   //hit.BuildFrom(buf);
   //hit.SetTimestamp(event.GetTimestamp());
   //InsertHit(hit);
+  std::cout << "Done." << std::endl;
+  std::cin.get();
+
   return Size();
 }
 TVector3 TCagra::GetSegmentPosition(int detnum, char subpos, int segnum) {
