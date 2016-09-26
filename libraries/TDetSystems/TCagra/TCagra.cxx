@@ -59,22 +59,36 @@ unsigned int GetRandomCAGRAChannel(const int detnum, const char leaf) {
   unsigned int chan_id = 0; // channel(mt);
   unsigned int address = 0xeeeeeeee;
 
+  static char parent_type = 0;
+
   if (detnum == -1 && leaf == -1) {
     // asking for a random detector (clover and leaf)
     do {
       board_id = board(mt);
       if (board_id > 110) {
-        chan_id = channel(mt)*10;
+        chan_id = channel(mt)*9;
       } else {
-        chan_id = channel(mt)*8;
+        chan_id = channel(mt)*7;
       }
       address = ((1<<24) + (board_id << 8) + chan_id);
 
-      std::cout << "Parent: ";
-      std::cout << TChannel::Get(address)->GetArrayPosition() << " ";
-      std::cout << TChannel::Get(address)->GetArraySubposition() << " ";
-      std::cout << TChannel::Get(address)->GetSegment() << std::endl;
-    } while (TChannel::Get(address)->GetSegment() != 0);
+
+      auto _system = *TChannel::Get(address)->GetSystem();
+      auto _detnum = TChannel::Get(address)->GetArrayPosition();
+      auto _leaf = *TChannel::Get(address)->GetArraySubposition();
+      auto _segnum = TChannel::Get(address)->GetSegment();
+      // std::cout << "Parent: ";
+      // std::cout << _system << " - ";
+      // std::cout << _detnum << " ";
+      // std::cout << _leaf << " ";
+      // std::cout << _segnum << std::endl;
+      if (_segnum == 0 && _leaf != 'X') {
+        parent_type = _system;
+        break;
+      }
+
+    } while (true);
+    //std::cin.get();
 
 
 
@@ -84,24 +98,32 @@ unsigned int GetRandomCAGRAChannel(const int detnum, const char leaf) {
     do {
       board_id = board(mt);
       if (board_id > 110) {
-        chan_id = channel(mt)*10;
+        chan_id = channel(mt)*9;
       } else {
-        chan_id = channel(mt)*8;
+        chan_id = channel(mt)*7;
       }
       address = ((1<<24) + (board_id << 8) + chan_id);
 
-      std::cout << "  Segment: ";
-      std::cout << TChannel::Get(address)->GetArrayPosition() << " ";
-      std::cout << TChannel::Get(address)->GetArraySubposition() << " ";
-      std::cout << TChannel::Get(address)->GetSegment() << std::endl;;
+      auto _system = *TChannel::Get(address)->GetSystem();
+      auto _detnum = TChannel::Get(address)->GetArrayPosition();
+      auto _leaf = *TChannel::Get(address)->GetArraySubposition();
+      auto _segnum = TChannel::Get(address)->GetSegment();
+      // std::cout << "  Segment: ";
+      // std::cout << _system << " - ";
+      // std::cout << _detnum << " ";
+      // std::cout << _leaf << " ";
+      // std::cout << _segnum;
+      // std:: cout << "  Need to match parent_type: " << parent_type << std::endl;
 
-    } while (!(TChannel::Get(address)->GetArrayPosition() == detnum &&
-               *TChannel::Get(address)->GetArraySubposition() == leaf) ||
-             !(TChannel::Get(address)->GetArrayPosition() == detnum &&
-               *TChannel::Get(address)->GetSystem() == 'Y' &&
-               TChannel::Get(address)->GetSegment() != 0)
-      );
-    std::cout << "Found!" << std::endl;
+      if (parent_type == 'Y') {
+        if (_detnum == detnum && _segnum != 0) { break; }
+      }else {
+        if (_detnum == detnum && _leaf == leaf && _segnum != 0) { break; }
+      }
+    } while (true);
+
+    //std::cout << "Found!" << std::endl;
+    //std::cin.get();
 
   }
 
@@ -115,6 +137,11 @@ unsigned int GetRandomCAGRAChannel(const int detnum, const char leaf) {
 }
 
 int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
+  // --- uncomment to simulate array data ------------------------ //
+  // static std::mt19937 mt(std::chrono::system_clock::now().time_since_epoch().count());
+  // static std::uniform_real_distribution<float> random(0,1);
+  // bool first_time = true;
+  // --- uncomment to simulate array data ------------------------ //
 
   std::unordered_map<int, std::vector<TCagraHit> > cc_hits;
   std::unordered_map<int, std::vector<TCagraHit> > seg_hits;
@@ -128,6 +155,23 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
     unsigned int address = ( (1<<24) +
                              (anl.GetBoardID() << 8) +
                              anl.GetChannel() );
+
+    // --- uncomment to simulate array data ------------------------ //
+    // static int prev_detnum = -1;
+    // static char prev_leaf = -1;
+    // if (random(mt) < 0.2 || first_time) {
+    //   first_time = false;
+    //   // pick new clover and leaf
+    //   address = GetRandomCAGRAChannel(-1,-1);
+    //   prev_detnum = TChannel::Get(address)->GetArrayPosition();
+    //   prev_leaf = *TChannel::Get(address)->GetArraySubposition();
+
+    // } else {
+    //   // use previous clover and leaf
+    //   address = GetRandomCAGRAChannel(prev_detnum,prev_leaf);
+    // }
+    // --- uncomment to simulate array data ------------------------ //
+
 
     TChannel* chan = TChannel::GetChannel(address);
     int detnum = chan->GetArrayPosition(); // clover number
@@ -161,10 +205,11 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
   for (auto& det : seg_hits) { // there is only one instance of each detector
     auto& seghits = det.second;
     auto& cchits = cc_hits.at(det.first);
+    auto nSegments = seghits.size();
+    auto nCores = cchits.size();
+    //std::cout << "Detector: " << det.first << " System: " << seghits[0].GetSystem() << " nCores: " << nCores << " nSegments: " << nSegments << std::endl;
 
     if (seghits[0].GetSystem() == 'Y') { // Yale clover
-      auto nSegments = seghits.size();
-      auto nCores = cchits.size();
       // don't need to check since segments must come with a core hit
       //auto nCores = 0u;
       //if (cc_hits.count(detnum)) {
@@ -172,7 +217,7 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
       switch(nCores) {
       case 1: {
         // if there is only 1 cc, then add all segment hits to it
-        assert(nSegments <= 2);
+        //assert(nSegments <= 2);
         for (auto& seg_hit : seghits) {
           cchits[0].AddSegmentHit(seg_hit);
         }
@@ -183,7 +228,7 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
       case 4: {
         if (nSegments == 1) {
           auto& seg_hit = seghits[0];
-          assert(seg_hit.GetLeaf() == 'M');
+          //assert(seg_hit.GetLeaf() == 'M');
           for (auto& cc_hit : cchits) {
             cc_hit.AddSegmentHit(seg_hit);
           }
@@ -260,6 +305,7 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
     }
   }
 
+  //std::cin.get();
   return Size();
 }
 
