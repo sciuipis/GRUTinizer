@@ -75,6 +75,24 @@ char TCagraHit::GetLeaf() const {
 
   return output;
 }
+int TCagraHit::GetSegnum() const {
+  TChannel* chan = TChannel::GetChannel(fAddress);
+  if(chan){
+    return chan->GetSegment();
+  } else {
+    return -1;
+  }
+}
+
+char TCagraHit::GetSystem() const {
+  TChannel* chan = TChannel::GetChannel(fAddress);
+  if(chan){
+    return *chan->GetSystem();
+  } else {
+    return -1;
+  }
+}
+
 // int TCagraHit::GetCrate() const {
 //   return (fAddress&0x00ff0000)>>16;
 // }
@@ -87,7 +105,7 @@ int TCagraHit::GetChannel() const {
   return (fAddress&0x000000ff)>>0;
 }
 
-TCagraSegmentHit& TCagraHit::MakeSegmentByAddress(unsigned int address){
+TCagraHit& TCagraHit::MakeSegmentByAddress(unsigned int address){
   // for(auto& segment : fSegments){
   //   if(segment.Address() == address){
   //     return segment;
@@ -95,7 +113,7 @@ TCagraSegmentHit& TCagraHit::MakeSegmentByAddress(unsigned int address){
   // }
 
   fSegments.emplace_back();
-  TCagraSegmentHit& output = fSegments.back();
+  TCagraHit& output = fSegments.back();
   output.SetAddress(address);
   return output;
 }
@@ -201,7 +219,7 @@ std::vector<Short_t>* TCagraHit::GetTrace(int segnum) {
   }
   for(auto& seg : fSegments) {
     if(seg.GetSegnum() == segnum) {
-      return &seg.GetTrace();
+      return seg.GetTrace();
     }
   }
   return NULL;

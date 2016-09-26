@@ -17,13 +17,18 @@
 // 00 - reserved (always = 00)
 // 65 - board id (0x65 = 101)
 // 01 - channel num (ranging from 0-9)
+//
+// Note: System indicates the type of clover this channel is part of
+//       E.g.    Y, I, T  - For Yale, IMP, Tohoku
+//
+//
 // --------------------------------------------------------------------------------
+
 
 
 //
 // 90 degree Yale clovers
 //
-
 
 //---------------------------  Digitizer 101 (0x65) for Clover 0 ---------------------------
 
@@ -31,48 +36,56 @@ CLO00AP00 {
   Address: 0x01006500
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO00BP00 {
   Address: 0x01006501
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO00CP00 {
   Address: 0x01006502
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO00DP00 {
   Address: 0x01006503
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO00LN01 {
   Address: 0x01006504
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO00MN02 {
   Address: 0x01006505
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO00RN03 {
   Address: 0x01006506
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 BGO00XP00 {
   Address: 0x01006507
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 
@@ -82,48 +95,56 @@ CLO01AP00 {
   Address: 0x01006600
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO01BP00 {
   Address: 0x01006601
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO01CP00 {
   Address: 0x01006602
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO01DP00 {
   Address: 0x01006603
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO01LN01 {
   Address: 0x01006604
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO01MN02 {
   Address: 0x01006605
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO01RN03 {
   Address: 0x01006606
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 BGO01XP00 {
   Address: 0x01006607
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 
@@ -136,48 +157,56 @@ CLO02AP00 {
   Address: 0x01006700
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO02BP00 {
   Address: 0x01006701
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO02CP00 {
   Address: 0x01006702
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO02DP00 {
   Address: 0x01006703
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO02LN01 {
   Address: 0x01006704
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO02MN02 {
   Address: 0x01006705
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO02RN03 {
   Address: 0x01006706
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 BGO02XP00 {
   Address: 0x01006707
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 
@@ -191,48 +220,56 @@ CLO03AP00 {
   Address: 0x01006800
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO03BP00 {
   Address: 0x01006801
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO03CP00 {
   Address: 0x01006802
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO03DP00 {
   Address: 0x01006803
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO03LN01 {
   Address: 0x01006804
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO03MN02 {
   Address: 0x01006805
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO03RN03 {
   Address: 0x01006806
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 BGO03XP00 {
   Address: 0x01006807
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 
@@ -246,48 +283,56 @@ CLO04AP00 {
   Address: 0x01006900
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO04BP00 {
   Address: 0x01006901
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO04CP00 {
   Address: 0x01006902
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO04DP00 {
   Address: 0x01006903
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO04LN01 {
   Address: 0x01006904
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO04MN02 {
   Address: 0x01006905
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO04RN03 {
   Address: 0x01006906
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 BGO04XP00 {
   Address: 0x01006907
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 
@@ -301,48 +346,56 @@ CLO05AP00 {
   Address: 0x01006A00
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO05BP00 {
   Address: 0x01006A01
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO05CP00 {
   Address: 0x01006A02
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO05DP00 {
   Address: 0x01006A03
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO05LN01 {
   Address: 0x01006A04
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO05MN02 {
   Address: 0x01006A05
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO05RN03 {
   Address: 0x01006A06
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 BGO05XP00 {
   Address: 0x01006A07
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 
@@ -355,48 +408,56 @@ CLO06AP00 {
   Address: 0x01006B00
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO06BP00 {
   Address: 0x01006B01
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO06CP00 {
   Address: 0x01006B02
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO06DP00 {
   Address: 0x01006B03
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO06LN01 {
   Address: 0x01006B04
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO06MN02 {
   Address: 0x01006B05
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO06RN03 {
   Address: 0x01006B06
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 BGO06XP00 {
   Address: 0x01006B07
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 
@@ -409,48 +470,56 @@ CLO07AP00 {
   Address: 0x01006C00
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO07BP00 {
   Address: 0x01006C01
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO07CP00 {
   Address: 0x01006C02
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO07DP00 {
   Address: 0x01006C03
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO07LN01 {
   Address: 0x01006C04
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO07MN02 {
   Address: 0x01006C05
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO07RN03 {
   Address: 0x01006C06
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 BGO07XP00 {
   Address: 0x01006C07
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 
@@ -463,48 +532,56 @@ CLO08AP00 {
   Address: 0x01006D00
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO08BP00 {
   Address: 0x01006D01
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO08CP00 {
   Address: 0x01006D02
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO08DP00 {
   Address: 0x01006D03
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO08LN01 {
   Address: 0x01006D04
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO08MN02 {
   Address: 0x01006D05
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO08RN03 {
   Address: 0x01006D06
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 BGO08XP00 {
   Address: 0x01006D07
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 
@@ -522,48 +599,56 @@ CLO09AP00 {
   Address: 0x01006E00
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO09BP00 {
   Address: 0x01006E01
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO09CP00 {
   Address: 0x01006E02
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO09DP00 {
   Address: 0x01006E03
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO09LN01 {
   Address: 0x01006E04
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO09MN02 {
   Address: 0x01006E05
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 CLO09RN03 {
   Address: 0x01006E06
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 BLO09XP00 {
   Address: 0x01006E07
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: Y
 }
 
 
@@ -578,6 +663,7 @@ CLO10AP00 {
   Address: 0x01006F00
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // 4 segments per crystal
@@ -585,24 +671,28 @@ CLO10AN01 {
   Address: 0x01006F01
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10AN02 {
   Address: 0x01006F02
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10AN03 {
   Address: 0x01006F03
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10AN04 {
   Address: 0x01006F04
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // central contact
@@ -610,6 +700,7 @@ CLO10BP00 {
   Address: 0x01006F05
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // 4 segments per crystal
@@ -617,24 +708,28 @@ CLO10BN01 {
   Address: 0x01006F06
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10BN02 {
   Address: 0x01006F07
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10BN03 {
   Address: 0x01006F08
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10BN04 {
   Address: 0x01006F09
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 
@@ -648,6 +743,7 @@ CLO10CP00 {
   Address: 0x01007000
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // 4 segments per crystal
@@ -655,24 +751,28 @@ CLO10CN01 {
   Address: 0x01007001
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10CN02 {
   Address: 0x01007002
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10CN03 {
   Address: 0x01007003
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10CN04 {
   Address: 0x01007004
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // central contact
@@ -680,6 +780,7 @@ CLO10DP00 {
   Address: 0x01007005
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // 4 segments per crystal
@@ -687,24 +788,28 @@ CLO10DN01 {
   Address: 0x01007006
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10DN02 {
   Address: 0x01007007
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10DN03 {
   Address: 0x01007008
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CLO10DN04 {
   Address: 0x01007009
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 //---------------------------  Digitizer 113 (0x71) for Clover 11a ---------------------------
@@ -714,6 +819,7 @@ CL011AP00 {
   Address: 0x01007100
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // 4 segments per crystal
@@ -721,24 +827,28 @@ CL011AN01 {
   Address: 0x01007101
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011AN02 {
   Address: 0x01007102
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011AN03 {
   Address: 0x01007103
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011AN04 {
   Address: 0x01007104
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // central contact
@@ -746,6 +856,7 @@ CL011BP00 {
   Address: 0x01007105
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // 4 segments per crystal
@@ -753,24 +864,28 @@ CL011BN01 {
   Address: 0x01007106
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011BN02 {
   Address: 0x01007107
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011BN03 {
   Address: 0x01007108
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011BN04 {
   Address: 0x01007109
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 
@@ -781,6 +896,7 @@ CL011CP00 {
   Address: 0x01007200
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // 4 segments per crystal
@@ -788,24 +904,28 @@ CL011CN01 {
   Address: 0x01007201
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011CN02 {
   Address: 0x01007202
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011CN03 {
   Address: 0x01007203
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011CN04 {
   Address: 0x01007204
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // central contact
@@ -813,6 +933,7 @@ CL011DP00 {
   Address: 0x01007205
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 // 4 segments per crystal
@@ -820,24 +941,28 @@ CL011DN01 {
   Address: 0x01007206
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011DN02 {
   Address: 0x01007207
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011DN03 {
   Address: 0x01007208
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 CL011DN04 {
   Address: 0x01007209
   EnergyCoeff: 0 1
   PoleZero: 1
+  System: I
 }
 
 
