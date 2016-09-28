@@ -247,44 +247,6 @@ EXT39AP00 {
 //   EnergyCoeff: 0 1
 // }
 
-// EXT11AP00 {
-//   Address: 0x01607200
-//   EnergyCoeff: 0 1
-// }
-// EXT02AP00 {
-//   Address: 0x01007201
-//   EnergyCoeff: 0 1
-// }
-// EXT03AP00 {
-//   Address: 0x01007202
-//   EnergyCoeff: 0 1
-// }
-// EXT04AP00 {
-//   Address: 0x01007203
-//   EnergyCoeff: 0 1
-// }
-
-// EXT05AP00 {
-//   Address: 0x01007300
-//   EnergyCoeff: 0 1
-// }
-// EXT06AP00 {
-//   Address: 0x01007301
-//   EnergyCoeff: 0 1
-// }
-// EXT07AP00 {
-//   Address: 0x01007302
-//   EnergyCoeff: 0 1
-// }
-// EXT08AP00 {
-//   Address: 0x01007303
-//   EnergyCoeff: 0 1
-// }
-// EXT09AP00 {
-//   Address: 0x01007304
-//   EnergyCoeff: 0 1
-// }
-
 
 
 

@@ -25,7 +25,8 @@ GGaus::GGaus(Double_t xlow,Double_t xhigh,Option_t *opt)
   fBGFit.SetLineStyle(2);
   fBGFit.SetLineColor(kBlack);
 
-  SetName(Form("gaus_%d_to_%d",(Int_t)(xlow),(Int_t)(xhigh)));
+  // Changing the name here causes an infinite loop when starting the FitEditor
+  //SetName(Form("gaus_%d_to_%d",(Int_t)(xlow),(Int_t)(xhigh)));
   InitNames();
   //TF1::SetParameter("centroid",cent);
 
@@ -37,7 +38,8 @@ GGaus::GGaus(Double_t xlow,Double_t xhigh,TF1 *bg,Option_t *opt)
   if(xlow>xhigh)
     std::swap(xlow,xhigh);
   TF1::SetRange(xlow,xhigh);
-  SetName(Form("gaus_%d_to_%d",(Int_t)(xlow),(Int_t)(xhigh)));
+  // Changing the name here causes an infinite loop when starting the FitEditor
+  //SetName(Form("gaus_%d_to_%d",(Int_t)(xlow),(Int_t)(xhigh)));
   InitNames();
 
   if(bg) {
@@ -157,7 +159,7 @@ bool GGaus::InitParams(TH1 *fithist){
   //limits. 
   TF1::SetParLimits(0,0,largesty*2);
   TF1::SetParLimits(1,xlow,xhigh);
-  TF1::SetParLimits(2,0.1,xhigh-xlow);
+  TF1::SetParLimits(2,0,xhigh-xlow);
   //TF1::SetParLimits(3,0.0,40);
   //TF1::SetParLimits(4,0.01,5); 
 
@@ -190,11 +192,11 @@ Bool_t GGaus::Fit(TH1 *fithist,Option_t *opt) {
   TVirtualFitter::SetMaxIterations(100000);
 
   bool verbose = !options.Contains("Q");
-  bool selfprint = !options.Contains("no-print");
-  if(!selfprint) {
+  bool noprint =  options.Contains("no-print");
+  if(noprint) {
     options.ReplaceAll("no-print","");
   }
-
+ 
 
   if(fithist->GetSumw2()->fN!=fithist->GetNbinsX()+2) 
     fithist->Sumw2();
@@ -203,16 +205,19 @@ Bool_t GGaus::Fit(TH1 *fithist,Option_t *opt) {
 
   //fitres.Get()->Print();
   if(!fitres.Get()->IsValid()) {
-    printf(RED  "fit has failed, trying refit... " RESET_COLOR);
+    if(!verbose)
+      printf(RED  "fit has failed, trying refit... " RESET_COLOR);
     //SetParameter(3,0.1);
     //SetParameter(4,0.01);
     //SetParameter(5,0.0);
     fithist->GetListOfFunctions()->Last()->Delete();
     fitres = fithist->Fit(this,Form("%sRSME",options.Data())); //,Form("%sRSM",options.Data()))
     if( fitres.Get()->IsValid() ) {
-      printf(DGREEN " refit passed!" RESET_COLOR "\n");
+      if(!verbose && !noprint)
+        printf(DGREEN " refit passed!" RESET_COLOR "\n");
     } else {
-      printf(DRED " refit also failed :( " RESET_COLOR "\n");
+      if(!verbose && !noprint)
+        printf(DRED " refit also failed :( " RESET_COLOR "\n");
     }
   }
 
@@ -274,10 +279,12 @@ Bool_t GGaus::Fit(TH1 *fithist,Option_t *opt) {
     std::swap(xlow,xhigh);
   fSum = fithist->Integral(fithist->GetXaxis()->FindBin(xlow),
                            fithist->GetXaxis()->FindBin(xhigh)); //* fithist->GetBinWidth(1);
+  printf("sum between markers: %02f\n",fSum);
+  fDSum = TMath::Sqrt(fSum);
   fSum -= bgArea;
+  printf("sum after subtraction: %02f\n",fSum);
 
-
-  if(!verbose) {
+  if(!verbose && !noprint) {
     Print();/*
     printf("BG Area:         %.02f\n",bgArea);
     printf("GetChisquared(): %.4f\n", TF1::GetChisquare());

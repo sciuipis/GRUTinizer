@@ -11,6 +11,8 @@
 
 #include "TRandom.h"
 
+#include "GRootFunctions.h"
+
 std::map<unsigned int,TChannel*> TChannel::fChannelMap;
 TChannel *TChannel::fDefaultChannel = new TChannel("TChannel",0xffffffff);
 std::string TChannel::fChannelData;
@@ -52,7 +54,7 @@ std::ostream& operator<<(std::ostream& out, const TChannel& chan) {
       << "   Position:\t" << chan.array_position << "\n"
       << "   Subposition:\t" << chan.array_subposition << "\n"
       << "   Segment:\t" << chan.segment << "\n"
-      << "   Collected_Charge:\t" << chan.collected_charge << "\n"
+      //<< "   Collected_Charge:\t" << chan.collected_charge << "\n"
       << "   Pedestal:\t" << chan.pedestal << "\n";
 
   // Print out each energy coefficient
@@ -141,6 +143,8 @@ void TChannel::Copy(TObject &rhs) const {
   ((TChannel&)rhs).collected_charge    = collected_charge;
   ((TChannel&)rhs).segment    = segment;
   ((TChannel&)rhs).energy_coeff = energy_coeff;
+  ((TChannel&)rhs).polezero_corrections = polezero_corrections;
+  ((TChannel&)rhs).baseline_corrections = baseline_corrections;
   ((TChannel&)rhs).time_coeff = time_coeff;
   ((TChannel&)rhs).efficiency_coeff = efficiency_coeff;
   ((TChannel&)rhs).pedestal = pedestal;
@@ -338,8 +342,13 @@ const std::vector<double>& TChannel::GetPoleZeroCoeff(double timestamp) const {
       return coeff_time.coefficients;
     }
   }
+  printf("got here!");
   // Should never reach here, but just in case.
   return empty_vec;
+}
+
+double TChannel::CalEfficiency(double energy) const {
+  return Efficiency(energy,GetEfficiencyCoeff());
 }
 
 void TChannel::ClearPoleZeroCoeff() {
@@ -366,8 +375,16 @@ void TChannel::SetPoleZeroCoeff(std::vector<double> coeff, double timestamp) {
 double TChannel::PoleZeroCorrection(const double& prerise, const double& postrise, const double& shaping_time, double timestamp) const {
   auto pz = GetPoleZeroCoeff(timestamp);
   if (!pz.size()) {
-    std::cout <<std::hex << address << std::endl;
-    throw std::runtime_error("No polezero in calibrations file, yet one is requested.");
+    static UShort_t nprint = 0;
+    if (nprint < 5) {
+      std::cout <<"No pole-zero in calibrations file found for address: 0x";
+      std::cout << std::hex << address << std::endl;
+      nprint++;
+    } else if (nprint == 5){
+      std::cout << "Void pole-zero warning is being suppressed." << std::endl;
+      nprint++;
+    }
+    pz.push_back(1);
   }
   return (postrise-prerise*pz[0])/shaping_time;
 }
@@ -409,10 +426,7 @@ double TChannel::BaselineCorrection(const double& charge, double asym_bl, double
     auto bl = GetBaselineCoeff(timestamp);
     asym_bl = (bl.size()) ? bl[0] : 0;
   }
-  if (!pz.size()) {
-    std::cout <<std::hex << address << std::endl;
-    throw std::runtime_error("No polezero in calibrations file, yet one is requested.");
-  }
+  if (!pz.size()) { pz.push_back(1); }
   return charge - asym_bl*(1. - pz[0]);
 }
 
@@ -482,6 +496,19 @@ double TChannel::Calibrate(double value, const std::vector<double>& coeff) {
   }
   return cal_value;
 }
+
+double TChannel::Efficiency(double energy,const std::vector<double>& coeff) {
+  // EFF = 10^(A0 + A1*LOG(E) + A2*LOG(E)^2 + A3/E^2);
+  if(coeff.size()<4) {
+    return 0.0;
+  }
+  return GRootFunctions::GammaEff(&energy,const_cast<double*>(&coeff[0]));
+}
+
+
+
+
+
 
 int TChannel::ReadCalFile(const char* filename,Option_t *opt) {
   std::string infilename = filename;

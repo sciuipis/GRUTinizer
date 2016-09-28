@@ -43,7 +43,7 @@ private:
 };
 
 
-
+unsigned int GetRandomCAGRAChannel();
 
 
 #endif

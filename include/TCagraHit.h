@@ -2,7 +2,7 @@
 #define TCagraHIT_H
 
 #include "TDetectorHit.h"
-#include "TCagraSegmentHit.h"
+//#include "TCagraSegmentHit.h"
 
 class TCagraHit : public TDetectorHit {
   public:
@@ -19,11 +19,16 @@ class TCagraHit : public TDetectorHit {
     int GetDetnum() const;
     char GetLeaf() const;
     int GetMainSegnum() const;
+    int GetSegnum() const;
+    char GetSystem() const;
 
     bool HasCore() const;
 
+    void AddSegmentHit(const TCagraHit& hit) { fSegments.push_back(hit); }
     unsigned int GetNumSegments() const { return fSegments.size(); }
-    TCagraSegmentHit& GetSegment(int i) { return fSegments.at(i); }
+    TCagraHit& GetSegment(int i) { return fSegments.at(i); }
+    void RemoveSegment(int i) { fSegments.erase(fSegments.begin()+i); }
+    void ClearSegments() { fSegments.clear(); }
     unsigned long GetSegmentTimestamp() {
         if(fSegments.size()){
             return fSegments[0].Timestamp();
@@ -32,7 +37,7 @@ class TCagraHit : public TDetectorHit {
         }
     }
 
-    TCagraSegmentHit& MakeSegmentByAddress(unsigned int address);
+    TCagraHit& MakeSegmentByAddress(unsigned int address);
 
     int GetBoardID() const;
     int GetChannel() const;
@@ -64,7 +69,7 @@ class TCagraHit : public TDetectorHit {
 
   private:
     std::vector<Short_t> fTrace;
-    std::vector<TCagraSegmentHit> fSegments;
+    std::vector<TCagraHit> fSegments;
     Double_t time;
     UShort_t flags;
     Double_t prerise_energy;

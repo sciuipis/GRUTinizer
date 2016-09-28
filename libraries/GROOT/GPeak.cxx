@@ -261,6 +261,10 @@ Bool_t GPeak::Fit(TH1 *fithist,Option_t *opt) {
   TVirtualFitter::SetMaxIterations(100000);
 
   bool verbose = !options.Contains("Q");
+  bool noprint =  options.Contains("no-print");
+  if(noprint) {
+    options.ReplaceAll("no-print","");
+  }
 
   if(fithist->GetSumw2()->fN!=fithist->GetNbinsX()+2)
     fithist->Sumw2();
@@ -348,6 +352,7 @@ Bool_t GPeak::Fit(TH1 *fithist,Option_t *opt) {
   fSum = fithist->Integral(fithist->GetXaxis()->FindBin(xlow),
                            fithist->GetXaxis()->FindBin(xhigh)); //* fithist->GetBinWidth(1);
   printf("sum between markers: %02f\n",fSum);
+  fDSum = TMath::Sqrt(fSum);
   fSum -= bgArea;
   printf("sum after subtraction: %02f\n",fSum);
 

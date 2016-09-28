@@ -27,10 +27,12 @@ public:
   const std::vector<std::string>& GuiSaveSetFiles() { return input_gui_hist_files; }
   const std::string& DetectorEnvironment()          { return detector_environment; }
   const std::string& OutputFile()                   { return output_file; }
+  const std::string& OutputFilteredFile()        { return output_filtered_file; }
   const std::string& OutputHistogramFile()          { return output_histogram_file; }
   const std::string& S800InverseMapFile()           { return s800_inverse_map_file; }
   std::string InputRing() { return input_ring; }
   std::string CompiledHistogramFile() { return compiled_histogram_file; }
+  std::string CompiledFilterFile() { return compiled_filter_file; }
 
   const std::vector<std::string>& OptionFiles() { return options_file; }
 
@@ -38,6 +40,7 @@ public:
 
   bool ExitAfterSorting()   const { return fExitAfterSorting; }
   bool ShowedHelp()         const { return fHelp; }
+  bool ShowedVersion()      const { return fShowedVersion; }
   bool ShowLogo()           const { return fShowLogo; }
   bool SortRaw()            const { return fSortRaw; }
   bool SortRoot()           const { return fSortRoot; }
@@ -46,10 +49,10 @@ public:
   bool MakeHistos()         const { return fMakeHistos; }
   bool SortMultiple()       const { return fSortMultiple; }
   std::string SortMultipleGlob()   const { return fGlobRaw; }
-  bool TreeSource()         const { return fTreeSource; }
   bool SaveRCNPTree()       const { return fSaveRCNPTree; }
   bool FastForwardRawFile() const { return fFastForwardRaw; }
   bool GRSingles()          const { return fGRSingles; }
+
 
 
   bool IsOnline()           const { return fIsOnline; }
@@ -64,6 +67,8 @@ public:
 
   std::string GenerateOutputFilename(const std::string& filename);
   std::string GenerateOutputFilename(const std::vector<std::string>& filename);
+
+  bool LongFileDescription() const { return fLongFileDescription; }
 
 
   void SetStartGUI(bool flag=true) { fStartGui=flag; }
@@ -84,16 +89,19 @@ private:
   std::string input_ring;
 
   std::string output_file;
+  std::string output_filtered_file;
   std::string output_histogram_file;
 
   std::string detector_environment;
   std::string compiled_histogram_file;
+  std::string compiled_filter_file;
   std::string s800_inverse_map_file;
 
   std::vector<std::string> options_file;
 
   kFileType fDefaultFileType;
   bool fExitAfterSorting;
+  bool fShowedVersion;
   bool fHelp;
   bool fShowLogo;
   bool fSortRaw;
@@ -103,12 +111,11 @@ private:
   bool fStartGui;
   bool fMakeHistos;
   bool fSortMultiple;
-  bool fTreeSource;
   bool fTimeSortInput;
   int fTimeSortDepth;
   int fBuildWindow;
   bool fShouldExit;
-
+  bool fLongFileDescription;
   bool fFastForwardRaw;
   bool fSaveRCNPTree;
   std::string fGlobRaw;
