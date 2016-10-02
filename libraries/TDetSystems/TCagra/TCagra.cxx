@@ -74,7 +74,7 @@ unsigned int GetRandomCAGRAChannel(const int detnum, const char leaf) {
 
 
       auto _system = *TChannel::Get(address)->GetSystem();
-      auto _detnum = TChannel::Get(address)->GetArrayPosition();
+      //auto _detnum = TChannel::Get(address)->GetArrayPosition();
       auto _leaf = *TChannel::Get(address)->GetArraySubposition();
       auto _segnum = TChannel::Get(address)->GetSegment();
       // std::cout << "Parent: ";
@@ -104,7 +104,7 @@ unsigned int GetRandomCAGRAChannel(const int detnum, const char leaf) {
       }
       address = ((1<<24) + (board_id << 8) + chan_id);
 
-      auto _system = *TChannel::Get(address)->GetSystem();
+      //auto _system = *TChannel::Get(address)->GetSystem();
       auto _detnum = TChannel::Get(address)->GetArrayPosition();
       auto _leaf = *TChannel::Get(address)->GetArraySubposition();
       auto _segnum = TChannel::Get(address)->GetSegment();
@@ -172,32 +172,46 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
     // }
     // --- uncomment to simulate array data ------------------------ //
 
-
-    TChannel* chan = TChannel::GetChannel(address);
-    int detnum = chan->GetArrayPosition(); // clover number
-    //char leaf = *chan->GetArraySubposition(); // leaf number
-    int segnum = chan->GetSegment(); // segment number
-    //char detector_type = *chan->GetSystem();
-
-    // seperate out central contact hits, from segment hits
     TCagraHit* hit = nullptr;
-    if (segnum == 0) {
-      cc_hits[detnum].emplace_back();
-      hit = &cc_hits[detnum].back();
+    TChannel* chan = TChannel::GetChannel(address);
+    if (chan) {
+      int detnum = chan->GetArrayPosition(); // clover number
+      //char leaf = *chan->GetArraySubposition(); // leaf number
+      int segnum = chan->GetSegment(); // segment number
+
+      // seperate out central contact hits, from segment hits
+      if (segnum == 0) {
+        cc_hits[detnum].emplace_back();
+        hit = &cc_hits[detnum].back();
+      } else {
+        seg_hits[detnum].emplace_back();
+        hit = &seg_hits[detnum].back();
+      }
+
+      if (*chan->GetSystem() == 'L') {
+        // do trace analysis for LaBr3
+        hit->SetTrace(anl.GetTrace());
+        hit->SetCharge(hit->GetTraceEnergy(0,57));
+      } else {
+        // set clover charge from pre/post rise charges
+        hit->SetTrace(anl.GetTrace());
+        hit->SetCharge(anl.GetEnergy());
+      }
     } else {
-      seg_hits[detnum].emplace_back();
-      hit = &seg_hits[detnum].back();
-    }
+        // no channel map for address exists
+        cc_hits[999].emplace_back();
+        hit = &cc_hits[999].back();
+      }
 
     hit->SetAddress(address);
     hit->SetTimestamp(event.GetTimestamp());
     hit->SetDiscTime(anl.GetCFD());
-    hit->SetCharge(anl.GetEnergy());
-    hit->SetTrace(anl.GetTrace());
     hit->SetPreRise(anl.GetPreE());
     hit->SetPostRise(anl.GetPostE());
     hit->SetFlags(anl.GetFlags());
     hit->SetBaseSample(anl.GetBaseSample());
+
+
 
   }
 

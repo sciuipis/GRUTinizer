@@ -27,308 +27,125 @@
 
 
 //
+// 45 degree LaBr3 detectors
+//
+
+//---------------------------  Digitizer 101 (0x65) for LaBr3 3 ---------------------------
+
+// LaBr3 //SL1
+// (theta,phi)  (45,45)
+
+LAB01XP00 {
+  Address: 0x01006500
+  EnergyCoeff: 0 1
+  System: L
+}
+
+//---------------------------  Digitizer 102 (0x66) for LaBr3 2 ---------------------------
+
+// LaBr3 //SL2
+// (theta,phi)  (45,-45)
+
+LAB02XP00 {
+  Address: 0x01006600
+  EnergyCoeff: 0 1
+  System: L
+}
+
+//---------------------------  Digitizer 103 (0x67) for LaBr3 6 ---------------------------
+
+// LaBr3 //SL3
+// (theta,phi)  (45,-135) 
+
+LAB03XP00 {
+  Address: 0x01006700
+  EnergyCoeff: 0 1
+  System: L
+}
+
+//---------------------------  Digitizer 104 (0x68) for LaBr3 5 ---------------------------
+
+// LaBr3 //SL4
+// (theta,phi)  (45,135) 
+
+LAB04XP00 {
+  Address: 0x01006800
+  EnergyCoeff: 0 1
+  System: L
+}
+
+
+// Central contacts
+//A - E1
+//B - E2
+//C - E3
+//D - E4
+
+// Clover crystal labeling
+//  -------  -------
+//  |E1 E2|  | A B |
+//  |E4 E3|  | D C |
+//  -------  -------
+
+
+//
 // 90 degree Yale clovers
 //
 
-//---------------------------  Digitizer 101 (0x65) for Clover 0 ---------------------------
-
-CLO00AP00 {
-  Address: 0x01006500
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO00BP00 {
-  Address: 0x01006501
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO00CP00 {
-  Address: 0x01006502
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO00DP00 {
-  Address: 0x01006503
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO00LN01 {
-  Address: 0x01006504
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO00MN02 {
-  Address: 0x01006505
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO00RN03 {
-  Address: 0x01006506
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-BGO00XP00 {
-  Address: 0x01006507
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
+//---------------------------  Digitizer 105 (0x69) for Clover 1 ---------------------------
 
 
-//---------------------------  Digitizer 102 (0x66) for Clover 1 ---------------------------
-
-CLO01AP00 {
-  Address: 0x01006600
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO01BP00 {
-  Address: 0x01006601
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO01CP00 {
-  Address: 0x01006602
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO01DP00 {
-  Address: 0x01006603
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO01LN01 {
-  Address: 0x01006604
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO01MN02 {
-  Address: 0x01006605
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO01RN03 {
-  Address: 0x01006606
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-BGO01XP00 {
-  Address: 0x01006607
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-
-
-
-
-//---------------------------  Digitizer 103 (0x67) for Clover 2 ---------------------------
-
-CLO02AP00 {
-  Address: 0x01006700
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO02BP00 {
-  Address: 0x01006701
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO02CP00 {
-  Address: 0x01006702
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO02DP00 {
-  Address: 0x01006703
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO02LN01 {
-  Address: 0x01006704
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO02MN02 {
-  Address: 0x01006705
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO02RN03 {
-  Address: 0x01006706
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-BGO02XP00 {
-  Address: 0x01006707
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-
-
-
-
-
-//---------------------------  Digitizer 104 (0x68) for Clover 3 ---------------------------
-
-CLO03AP00 {
-  Address: 0x01006800
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO03BP00 {
-  Address: 0x01006801
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO03CP00 {
-  Address: 0x01006802
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO03DP00 {
-  Address: 0x01006803
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO03LN01 {
-  Address: 0x01006804
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO03MN02 {
-  Address: 0x01006805
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-CLO03RN03 {
-  Address: 0x01006806
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-BGO03XP00 {
-  Address: 0x01006807
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: Y
-}
-
-
-
-
-
-
-//---------------------------  Digitizer 105 (0x69) for Clover 4 ---------------------------
-
-CLO04AP00 {
+// (theta,phi)  (90,67.5) // SL5
+CLO05AP00 { 
   Address: 0x01006900
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO04BP00 {
+CLO05BP00 {
   Address: 0x01006901
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO04CP00 {
+CLO05CP00 {
   Address: 0x01006902
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO04DP00 {
+CLO05DP00 {
   Address: 0x01006903
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO04LN01 {
+BGO05XP00 {
   Address: 0x01006904
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO04MN02 {
+CLO05RN01 {
   Address: 0x01006905
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO04RN03 {
+CLO05MN02 {
   Address: 0x01006906
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-BGO04XP00 {
+CLO05LN03 {
   Address: 0x01006907
   EnergyCoeff: 0 1
   PoleZero: 1
@@ -338,60 +155,59 @@ BGO04XP00 {
 
 
 
+//---------------------------  Digitizer 106 (0x6A) for Clover 2 ---------------------------
 
-
-//---------------------------  Digitizer 106 (0x6A) for Clover 5 ---------------------------
-
-CLO05AP00 {
+// (theta,phi)  (90,22.5) //SL6
+CLO06AP00 {
   Address: 0x01006A00
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO05BP00 {
+CLO06BP00 {
   Address: 0x01006A01
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO05CP00 {
+CLO06CP00 {
   Address: 0x01006A02
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO05DP00 {
+CLO06DP00 {
   Address: 0x01006A03
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO05LN01 {
+BGO06XP00 {
   Address: 0x01006A04
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO05MN02 {
+CLO06RN01 {
   Address: 0x01006A05
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO05RN03 {
+CLO06MN02 {
   Address: 0x01006A06
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-BGO05XP00 {
+CLO06LN03 {
   Address: 0x01006A07
   EnergyCoeff: 0 1
   PoleZero: 1
@@ -402,58 +218,62 @@ BGO05XP00 {
 
 
 
-//---------------------------  Digitizer 107 (0x6B) for Clover 6 ---------------------------
 
-CLO06AP00 {
+
+//---------------------------  Digitizer 107 (0x6B) for Clover 3 ---------------------------
+
+
+// (theta,phi)  (90,-22.5) //SL7
+CLO07AP00 {
   Address: 0x01006B00
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO06BP00 {
+CLO07BP00 {
   Address: 0x01006B01
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO06CP00 {
+CLO07CP00 {
   Address: 0x01006B02
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO06DP00 {
+CLO07DP00 {
   Address: 0x01006B03
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO06LN01 {
+BGO07XP00 {
   Address: 0x01006B04
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO06MN02 {
+CLO07RN01 {
   Address: 0x01006B05
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO06RN03 {
+CLO07MN02 {
   Address: 0x01006B06
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-BGO06XP00 {
+CLO07LN03 {
   Address: 0x01006B07
   EnergyCoeff: 0 1
   PoleZero: 1
@@ -461,123 +281,119 @@ BGO06XP00 {
 }
 
 
+//---------------------------  Digitizer 108 (0x6C) for Clover 4 ---------------------------
 
-
-
-//---------------------------  Digitizer 108 (0x6C) for Clover 7---------------------------
-
-CLO07AP00 {
+// (theta,phi)  (90,-67.5) //SL8
+CLO08AP00 {
   Address: 0x01006C00
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO07BP00 {
+CLO08BP00 {
   Address: 0x01006C01
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO07CP00 {
+CLO08CP00 {
   Address: 0x01006C02
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO07DP00 {
+CLO08DP00 {
   Address: 0x01006C03
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO07LN01 {
+BGO08XP00 {
   Address: 0x01006C04
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO07MN02 {
+CLO08RN01 {
   Address: 0x01006C05
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO07RN03 {
+CLO08MN02 {
   Address: 0x01006C06
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-BGO07XP00 {
+CLO08LN03 {
   Address: 0x01006C07
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
+ 
+//---------------------------  Digitizer 109 (0x6D) for Clover 5 ---------------------------
 
-
-
-// 135 degree clovers 
-//---------------------------  Digitizer 109 (0x6D) for Clover 8 ---------------------------
-
-CLO08AP00 {
+// (theta,phi)  (90,-112.5) //SL9
+CLO09AP00 {
   Address: 0x01006D00
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO08BP00 {
+CLO09BP00 {
   Address: 0x01006D01
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO08CP00 {
+CLO09CP00 {
   Address: 0x01006D02
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO08DP00 {
+CLO09DP00 {
   Address: 0x01006D03
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO08LN01 {
+BGO09XP00 {
   Address: 0x01006D04
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO08MN02 {
+CLO09RN01 {
   Address: 0x01006D05
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO08RN03 {
+CLO09MN02 {
   Address: 0x01006D06
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-BGO08XP00 {
+CLO09LN03 {
   Address: 0x01006D07
   EnergyCoeff: 0 1
   PoleZero: 1
@@ -586,65 +402,59 @@ BGO08XP00 {
 
 
 
+//---------------------------  Digitizer 110 (0x6E) for Clover 6 ---------------------------
 
-
-
-
-
-
-
-//---------------------------  Digitizer 110 (0x6E) for Clover 9 ---------------------------
-
-CLO09AP00 {
+// (theta,phi)  (90,-157.5) //SL10
+CLO10AP00 {
   Address: 0x01006E00
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO09BP00 {
+CLO10BP00 {
   Address: 0x01006E01
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO09CP00 {
+CLO10CP00 {
   Address: 0x01006E02
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO09DP00 {
+CLO10DP00 {
   Address: 0x01006E03
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO09LN01 {
+BGO10XP00 {
   Address: 0x01006E04
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO09MN02 {
+CLO10RN01 {
   Address: 0x01006E05
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-CLO09RN03 {
+CLO10MN02 {
   Address: 0x01006E06
   EnergyCoeff: 0 1
   PoleZero: 1
   System: Y
 }
 
-BLO09XP00 {
+CLO10LN03 {
   Address: 0x01006E07
   EnergyCoeff: 0 1
   PoleZero: 1
@@ -654,325 +464,512 @@ BLO09XP00 {
 
 
 
+//---------------------------  Digitizer 111 (0x6F) for Clover 7 ---------------------------
 
-// IMP 
-//---------------------------  Digitizer 111 (0x6F) for Clover 10a ---------------------------
-
-// central contact
-CLO10AP00 {
+// (theta,phi)  (90,157.5) //SL11
+CLO11AP00 {
   Address: 0x01006F00
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-// 4 segments per crystal
-CLO10AN01 {
+CLO11BP00 {
   Address: 0x01006F01
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CLO10AN02 {
+CLO11CP00 {
   Address: 0x01006F02
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CLO10AN03 {
+CLO11DP00 {
   Address: 0x01006F03
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CLO10AN04 {
+BGO11XP00 {
   Address: 0x01006F04
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-// central contact
-CLO10BP00 {
+CLO11RN01 {
   Address: 0x01006F05
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-// 4 segments per crystal
-CLO10BN01 {
+CLO11MN02 {
   Address: 0x01006F06
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CLO10BN02 {
+CLO11LN03 {
   Address: 0x01006F07
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
-}
-
-CLO10BN03 {
-  Address: 0x01006F08
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: I
-}
-
-CLO10BN04 {
-  Address: 0x01006F09
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: I
+  System: Y
 }
 
 
+//---------------------------  Digitizer 112 (0x70) for Clover 8 ---------------------------
 
-
-
-//---------------------------  Digitizer 112 (0x70) for Clover 10b ---------------------------
-
-// central contact
-CLO10CP00 {
+// (theta,phi)  (90,112.5) //SL12
+CLO12AP00 {
   Address: 0x01007000
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-// 4 segments per crystal
-CLO10CN01 {
+CLO12BP00 {
   Address: 0x01007001
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CLO10CN02 {
+CLO12CP00 {
   Address: 0x01007002
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CLO10CN03 {
+CLO12DP00 {
   Address: 0x01007003
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CLO10CN04 {
+BGO12XP00 {
   Address: 0x01007004
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-// central contact
-CLO10DP00 {
+CLO12RN01 {
   Address: 0x01007005
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-// 4 segments per crystal
-CLO10DN01 {
+CLO12MN02 {
   Address: 0x01007006
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CLO10DN02 {
+CLO12LN03 {
   Address: 0x01007007
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CLO10DN03 {
-  Address: 0x01007008
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: I
-}
 
-CLO10DN04 {
-  Address: 0x01007009
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: I
-}
 
-//---------------------------  Digitizer 113 (0x71) for Clover 11a ---------------------------
+//
+// 135 degree clovers
+//
 
-// central contact
-CL011AP00 {
+//---------------------------  Digitizer 113 (0x71) for Clover 9 ---------------------------
+
+// ARL clover // SL13
+// (theta,phi)  (135,45) 
+CLO13AP00 {
   Address: 0x01007100
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: A
 }
 
-// 4 segments per crystal
-CL011AN01 {
+CLO13BP00 {
   Address: 0x01007101
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CL011AN02 {
+CLO13CP00 {
   Address: 0x01007102
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CL011AN03 {
+CLO13DP00 {
   Address: 0x01007103
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CL011AN04 {
+BGO13XP00 {
   Address: 0x01007104
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-// central contact
-CL011BP00 {
-  Address: 0x01007105
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: I
-}
+//---------------------------  Digitizer 114 (0x72) for Clover 10 ---------------------------
 
-// 4 segments per crystal
-CL011BN01 {
-  Address: 0x01007106
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: I
-}
-
-CL011BN02 {
-  Address: 0x01007107
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: I
-}
-
-CL011BN03 {
-  Address: 0x01007108
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: I
-}
-
-CL011BN04 {
-  Address: 0x01007109
-  EnergyCoeff: 0 1
-  PoleZero: 1
-  System: I
-}
-
-
-//---------------------------  Digitizer 114 (0x72) for Clover 11b ---------------------------
-
-// central contact
-CL011CP00 {
+// ARL clover //SL14
+// (theta,phi)  (135,-45) 
+CLO14AP00 {
   Address: 0x01007200
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: A
 }
 
-// 4 segments per crystal
-CL011CN01 {
+CLO14BP00 {
   Address: 0x01007201
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CL011CN02 {
+CLO14CP00 {
   Address: 0x01007202
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CL011CN03 {
+CLO14DP00 {
   Address: 0x01007203
   EnergyCoeff: 0 1
   PoleZero: 1
-  System: I
+  System: Y
 }
 
-CL011CN04 {
+BGO14XP00 {
   Address: 0x01007204
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: Y
+}
+
+
+//---------------------------  Digitizer 115 (0x73) for Clover 11 ---------------------------
+
+//IMP Clover //SL15
+// (theta,phi)  (135,-135)
+
+// central contact
+CLO15AP00 {
+  Address: 0x01007300
   EnergyCoeff: 0 1
   PoleZero: 1
   System: I
 }
-
 // central contact
-CL011DP00 {
-  Address: 0x01007205
+CLO15BP00 {
+  Address: 0x01007301
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+// central contact
+CLO15CP00 {
+  Address: 0x01007302
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+// central contact
+CLO15DP00 {
+  Address: 0x01007303
   EnergyCoeff: 0 1
   PoleZero: 1
   System: I
 }
 
 // 4 segments per crystal
-CL011DN01 {
-  Address: 0x01007206
+CLO15AN01 {
+  Address: 0x01007304
   EnergyCoeff: 0 1
   PoleZero: 1
   System: I
 }
 
-CL011DN02 {
-  Address: 0x01007207
+CLO15AN02 {
+  Address: 0x01007305
   EnergyCoeff: 0 1
   PoleZero: 1
   System: I
 }
 
-CL011DN03 {
-  Address: 0x01007208
+CLO15AN03 {
+  Address: 0x01007306
   EnergyCoeff: 0 1
   PoleZero: 1
   System: I
 }
 
-CL011DN04 {
-  Address: 0x01007209
+CLO15AN04 {
+  Address: 0x01007307
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO15BN01 {
+  Address: 0x01007308
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO15BN02 {
+  Address: 0x01007309
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+//---------------------------  Digitizer 116 (0x74) for Clover 12 ---------------------------
+
+//IMP Clover // SL16
+// (theta,phi)  (135,135)
+
+// central contact
+CLO16AP00 {
+  Address: 0x01007400
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+// central contact
+CLO16BP00 {
+  Address: 0x01007401
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+// central contact
+CLO16CP00 {
+  Address: 0x01007402
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+// central contact
+CLO16DP00 {
+  Address: 0x01007403
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+// 4 segments per crystal
+CLO16AN01 {
+  Address: 0x01007404
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16AN02 {
+  Address: 0x01007405
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16AN03 {
+  Address: 0x01007406
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16AN04 {
+  Address: 0x01007407
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16BN01 {
+  Address: 0x01007408
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16BN02 {
+  Address: 0x01007409
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+//---------------------------  Digitizer 117 (0x75) for Clover 11 ---------------------------
+
+CLO15BN03 {
+  Address: 0x01007500
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO15BN04 {
+  Address: 0x01007501
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO15CN01 {
+  Address: 0x01007502
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO15CN02 {
+  Address: 0x01007503
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO15CN03 {
+  Address: 0x01007504
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO15CN04 {
+  Address: 0x01007505
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO15DN01 {
+  Address: 0x01007506
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO15DN02 {
+  Address: 0x01007507
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO15DN03 {
+  Address: 0x01007508
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO15DN04 {
+  Address: 0x01007509
   EnergyCoeff: 0 1
   PoleZero: 1
   System: I
 }
 
 
-//---------------------------  Digitizer 115 (0x73)  ---------------------------
 
-//---------------------------  Digitizer 116 (0x74)  ---------------------------
 
-//---------------------------  Digitizer 117 (0x75)  ---------------------------
+//---------------------------  Digitizer 118 (0x76) for Clover 12 ---------------------------
 
-//---------------------------  Digitizer 118 (0x76)  ---------------------------
+CLO16BN03 {
+  Address: 0x01007600
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16BN04 {
+  Address: 0x01007601
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16CN01 {
+  Address: 0x01007602
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16CN02 {
+  Address: 0x01007603
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16CN03 {
+  Address: 0x01007604
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16CN04 {
+  Address: 0x01007605
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16DN01 {
+  Address: 0x01007606
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16DN02 {
+  Address: 0x01007607
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16DN03 {
+  Address: 0x01007608
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+CLO16DN04 {
+  Address: 0x01007609
+  EnergyCoeff: 0 1
+  PoleZero: 1
+  System: I
+}
+
+
 
 //---------------------------  Digitizer 119 (0x77)  ---------------------------
 

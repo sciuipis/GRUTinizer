@@ -44,14 +44,14 @@ class clover(object):
                   + str(np.around(self.placement.X(),10)) + " "
                   + str(np.around(self.placement.Y(),10)) + " "
                   + str(np.around(self.placement.Z(),10)))
-
+        print ("")
     def print_crystal_placement(self,idxclover,coord=None):
         theta_rotation = TRotation()
         phi_rotation = TRotation()
         theta_rotation.RotateY(self.placement.Theta())
         phi_rotation.RotateZ(self.placement.Phi())
         #                                   A        B        C      D
-        for k,(xsign,ysign) in enumerate([(+1,+1),(-1,+1),(+1,-1),(-1,-1)]):
+        for k,(xsign,ysign) in enumerate([(-1,+1),(+1,+1),(+1,-1),(-1,-1)]):
             crystal_offset = TVector3(xsign*self.xdispl,ysign*self.ydispl,self.covergap)
             crystal_offset = phi_rotation*theta_rotation*crystal_offset
             crystal = TVector3(self.placement.X()+crystal_offset.X(),
@@ -74,7 +74,7 @@ class clover(object):
         phi_rotation = TRotation()
         theta_rotation.RotateY(self.placement.Theta())
         phi_rotation.RotateZ(self.placement.Phi())
-        for k,(xsign,ysign) in enumerate( [(+1,+1),(-1,+1),(+1,-1),(-1,-1)]):
+        for k,(xsign,ysign) in enumerate( [(-1,+1),(+1,+1),(+1,-1),(-1,-1)]):
             crystal_offset = TVector3(xsign*self.xdispl,ysign*self.ydispl,self.covergap)
             crystal_offset = phi_rotation*theta_rotation*crystal_offset
             crystal = TVector3(self.placement.X()+crystal_offset.X(),
@@ -114,26 +114,26 @@ class clover(object):
 
 if __name__=='__main__':
 
-    # 45 degree detectors (Tohoku)
+    # 45 degree LaBr3 detectors
     for i in range(0,4):
-        r = 17.70
+        r = 15.00
         theta = 45.0
         phi = 45+90.0*i
         if phi > 180:
             phi -= 360
         placed = clover(r,theta,phi,CloverType.Yale)
-        #placed.print_clover_placement(i+1,coord="Spherical")
+        placed.print_clover_placement(i+1,coord="Spherical")
         #placed.print_clover_placement(i+1)
         #placed.print_crystal_placement(i+1)
         #placed.print_segment_placement(i+1)
-        placed.print_crystal_placement(i+1,coord="Spherical")
+        #placed.print_crystal_placement(i+1,coord="Spherical")
 
 
     # 90 degree detectors (yale)
     for i in range(0,8):
-        r = 17.70
+        r = 20.80
         theta = 90.0
-        phi = 45*i
+        phi = 45*i + 45./2
         placed = clover(r,theta,phi,CloverType.Yale)
         #placed.print_clover_placement(i+4+1,coord="Spherical")
         #placed.print_clover_placement(i+4+1)
@@ -143,14 +143,14 @@ if __name__=='__main__':
 
     # 135 degree detectors (Tohoku)
     for i in range(0,4):
-        r = 17.70
+        r = 20.8
         theta = 135.0
         phi = 45+90.0*i
         if phi > 180:
             phi -= 360
         placed = clover(r,theta,phi,CloverType.Yale)
-        #placed.print_clover_placement(i+12+1,coord="Spherical")
+        placed.print_clover_placement(i+12+1,coord="Spherical")
         #placed.print_clover_placement(i+12+1)
         #placed.print_crystal_placement(i+12+1)
         #placed.print_segment_placement(i+12+1)
-        placed.print_crystal_placement(i+12+1,coord="Spherical")
+        #placed.print_crystal_placement(i+12+1,coord="Spherical")
