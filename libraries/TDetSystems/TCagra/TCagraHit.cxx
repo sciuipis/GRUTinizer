@@ -252,7 +252,7 @@ double TCagraHit::GetTraceHeightDoppler(double beta,const TVector3& vec) const {
   return dc_en;
 }
 
-Double_t TCagraHit::GetTraceEnergy(const UShort_t& a,const UShort_t& b,const UShort_t& x,const UShort_t& y) const {
+Double_t TCagraHit::GetTraceEnergy(const UShort_t& a,const UShort_t& b,UShort_t x, UShort_t y) const {
   if (!fTrace.size()) { return 0; }
 
   if (fTrace.size() < y) {
@@ -262,6 +262,7 @@ Double_t TCagraHit::GetTraceEnergy(const UShort_t& a,const UShort_t& b,const USh
     } nprint++;
     return 0;
   }
+  if (y==0) { y = fTrace.size(); }
 
   double baseline = 0;
   for (int i=a; i<b; i++) { baseline+=fTrace[i]; }

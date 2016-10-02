@@ -172,22 +172,27 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
     // }
     // --- uncomment to simulate array data ------------------------ //
 
-
-    TChannel* chan = TChannel::GetChannel(address);
-    int detnum = chan->GetArrayPosition(); // clover number
-    //char leaf = *chan->GetArraySubposition(); // leaf number
-    int segnum = chan->GetSegment(); // segment number
-    //char detector_type = *chan->GetSystem();
-
-    // seperate out central contact hits, from segment hits
     TCagraHit* hit = nullptr;
-    if (segnum == 0) {
-      cc_hits[detnum].emplace_back();
-      hit = &cc_hits[detnum].back();
+    TChannel* chan = TChannel::GetChannel(address);
+    if (chan) {
+      int detnum = chan->GetArrayPosition(); // clover number
+      //char leaf = *chan->GetArraySubposition(); // leaf number
+      int segnum = chan->GetSegment(); // segment number
+      //char detector_type = *chan->GetSystem();
+
+      // seperate out central contact hits, from segment hits
+      if (segnum == 0) {
+        cc_hits[detnum].emplace_back();
+        hit = &cc_hits[detnum].back();
+      } else {
+        seg_hits[detnum].emplace_back();
+        hit = &seg_hits[detnum].back();
+      }
     } else {
-      seg_hits[detnum].emplace_back();
-      hit = &seg_hits[detnum].back();
-    }
+        // no channel map for address exists
+        cc_hits[999].emplace_back();
+        hit = &cc_hits[999].back();
+      }
 
     hit->SetAddress(address);
     hit->SetTimestamp(event.GetTimestamp());
