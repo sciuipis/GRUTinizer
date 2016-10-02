@@ -216,13 +216,15 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
 
   }
 
-  // if there is a segment hit without a central contact, ignore it
-  if (cc_hits.size() == 0) {
-    return 0;
-  }
+  // // if there is a segment hit without a central contact, ignore it
+  // if (cc_hits.size() == 0) {
+  //   return 0;
+  // }
 
   // now let's do some work with organizing the segments with the central contacts
   for (auto& det : seg_hits) { // there is only one instance of each detector
+    if (cc_hits.count(det.first)==0) { continue; } // skip ay segments which dont have a core hit in the same detector
+
     auto& seghits = det.second;
     auto& cchits = cc_hits.at(det.first);
     auto nSegments = seghits.size();
