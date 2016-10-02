@@ -165,7 +165,12 @@ Double_t TCagraHit::GetCorrectedEnergy(Double_t asym_bl) {
   TChannel* chan = TChannel::GetChannel(fAddress);
   Double_t Energy = 0;
   if(!chan){
-    std::cout << std::hex << "Channel 0x" << fAddress << " not defined in calibrations file, no corrections are applied." << std::endl;
+    static int count = 0;
+    if (count++ < 10) {
+      std::cout << std::hex << "Channel 0x" << fAddress << " not defined in calibrations file, no corrections are applied." << std::dec << std::endl;
+    } else if (count == 10) {
+      std::cout << "Supressing warning." <<std::endl;
+    }
   } else {
     auto pzE = chan->PoleZeroCorrection(prerise_energy,postrise_energy,TANLEvent::GetShapingTime());
     pzE = chan->BaselineCorrection(pzE,asym_bl);

@@ -73,25 +73,25 @@ void MakeCAGRAHistograms(TRuntimeObjects& obj, TCagra& cagra) {
     stream.str("");
     stream << "Ge_" << boardid << "_" << chan;
     obj.FillHistogram("CAGRA_Raw", stream.str(),10000,0,10000,core_hit.Charge());
+    for (auto& segment : core_hit) {
+      stream.str("");
+      stream << "Ge_" << boardid << "_" << segment.GetChannel();
+      obj.FillHistogram("CAGRA_Raw",stream.str(),10000,0,10000,segment.Charge());
+    }
 
     stream.str("");
     stream << "Ge_" << boardid << "_" << chan;
-
     obj.FillHistogram("CAGRA_Calibrated",stream.str(),10000,0,10000,core_hit.GetEnergy());
     for (auto& segment : core_hit) {
-      stream << "_seg" << segment.GetSegnum();
+      stream.str("");
+      stream << "Ge_" << boardid << "_" << segment.GetChannel();
       obj.FillHistogram("CAGRA_Calibrated",stream.str(),10000,0,10000,segment.GetEnergy());
     }
 
     // skip polezero for LaBr3 system
     if ( core_hit.GetSystem() != 'L') {
 
-      stream.str("");
-      stream << "Ge_PZ_" << boardid << "_" << chan;
-      obj.FillHistogram("CAGRA_Corrected", stream.str(),10000,0,10000,core_hit.GetCorrectedEnergy(0));
-      stream.str("");
-      stream << "Ge_PZ_AsymBL_" << boardid << "_" << chan;
-      obj.FillHistogram("CAGRA_Corrected", stream.str(),10000,0,10000,core_hit.GetCorrectedEnergy(core_hit.GetBaseSample()));
+
 
       Double_t prerise_base = core_hit.GetPreRise()/TANLEvent::GetShapingTime();
 
@@ -102,6 +102,13 @@ void MakeCAGRAHistograms(TRuntimeObjects& obj, TCagra& cagra) {
       stream.str("");
       stream << "E_BL_scale" << boardid << "_" << chan;
       obj.FillHistogram("CAGRA_Baseline", stream.str(),1000,0,10000,core_hit.Charge()-(1.0/-11.21)*prerise_base,1000,0,3000,prerise_base);
+
+      stream.str("");
+      stream << "Ge_PZ_" << boardid << "_" << chan;
+      obj.FillHistogram("CAGRA_Corrected", stream.str(),10000,0,10000,core_hit.GetCorrectedEnergy(0));
+      stream.str("");
+      stream << "Ge_PZ_AsymBL_" << boardid << "_" << chan;
+      obj.FillHistogram("CAGRA_Corrected", stream.str(),10000,0,10000,core_hit.GetCorrectedEnergy(core_hit.GetBaseSample()));
 
       stream.str("");
       stream << "E_cor_BL" << boardid << "_" << chan;
@@ -290,7 +297,8 @@ void MakeCoincidenceHistograms(TRuntimeObjects& obj, TCagra& cagra, TGrandRaiden
         stream << "Ge_" << boardid << "_" <<channel;
         obj.FillHistogram("COIN_Calibrated",stream.str(),10000,0,10000,core_hit.GetEnergy());
         for (auto& segment : core_hit) {
-          stream << "_seg" << segment.GetSegnum();
+          stream.str("");
+          stream << "Ge_" << boardid << "_" << segment.GetChannel();
           obj.FillHistogram("COIN_Calibrated",stream.str(),10000,0,10000,segment.GetEnergy());
         }
 
