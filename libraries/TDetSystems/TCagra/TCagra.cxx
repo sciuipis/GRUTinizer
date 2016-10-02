@@ -198,10 +198,11 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
         hit->SetCharge(anl.GetEnergy());
       }
     } else {
-        // no channel map for address exists
-        cc_hits[999].emplace_back();
-        hit = &cc_hits[999].back();
-      }
+      // no channel map for address exists
+      // cc_hits[999].emplace_back();
+      // hit = &cc_hits[999].back();
+      continue;
+    }
 
     hit->SetAddress(address);
     hit->SetTimestamp(event.GetTimestamp());
@@ -213,6 +214,11 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
 
 
 
+  }
+
+  // if there is a segment hit without a central contact, ignore it
+  if (cc_hits.size() == 0) {
+    return 0;
   }
 
   // now let's do some work with organizing the segments with the central contacts
