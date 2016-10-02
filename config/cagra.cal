@@ -38,6 +38,7 @@
 LAB01XP00 {
   Address: 0x01006500
   EnergyCoeff: 0 1
+  System: L
 }
 
 //---------------------------  Digitizer 102 (0x66) for LaBr3 2 ---------------------------
@@ -48,6 +49,7 @@ LAB01XP00 {
 LAB02XP00 {
   Address: 0x01006600
   EnergyCoeff: 0 1
+  System: L
 }
 
 //---------------------------  Digitizer 103 (0x67) for LaBr3 6 ---------------------------
@@ -58,6 +60,7 @@ LAB02XP00 {
 LAB03XP00 {
   Address: 0x01006700
   EnergyCoeff: 0 1
+  System: L
 }
 
 //---------------------------  Digitizer 104 (0x68) for LaBr3 5 ---------------------------
@@ -68,6 +71,7 @@ LAB03XP00 {
 LAB04XP00 {
   Address: 0x01006800
   EnergyCoeff: 0 1
+  System: L
 }
 
 

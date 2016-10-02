@@ -48,6 +48,9 @@ class TCagraHit : public TDetectorHit {
                       const TVector3& particle_vec = TVector3(0,0,1),
                       const TVector3& cagra_offset = TVector3(0,0,0)) const;
 
+    std::vector<TCagraHit>::iterator begin() { return fSegments.begin(); }
+    std::vector<TCagraHit>::iterator end() { return fSegments.end(); }
+
     void SetDiscTime(const Double_t t) { time = t; }
     Double_t GetDiscTime() { return time; }
     Double_t GetCorrectedEnergy(Double_t asym_bl=0.);
