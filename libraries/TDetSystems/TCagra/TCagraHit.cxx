@@ -258,7 +258,7 @@ double TCagraHit::GetTraceHeightDoppler(double beta,const TVector3& vec) const {
 }
 
 Double_t TCagraHit::GetTraceEnergy(const UShort_t& a,const UShort_t& b,UShort_t x, UShort_t y) const {
-  if (!fTrace.size()) { return 0; }
+  if (!fTrace.size() < b) { return 0; }
 
   if (fTrace.size() < y) {
     static int nprint = 0;
@@ -268,7 +268,11 @@ Double_t TCagraHit::GetTraceEnergy(const UShort_t& a,const UShort_t& b,UShort_t 
     return 0;
   }
   if (y==0) { y = fTrace.size(); }
-
+  if ( y >= fTrace.size()) {
+    std::cout << "Request upper bound on trace integration is larger than the trace size." << std::endl;
+    std::cout << "Trace Info: " << a << " " << b << " " << x << " "<<y << " " << fTrace.size() <<std::endl;
+    return 0;
+  }
   double baseline = 0;
   for (int i=a; i<b; i++) { baseline+=fTrace[i]; }
   double integral = 0;
