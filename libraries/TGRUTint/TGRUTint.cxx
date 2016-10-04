@@ -190,6 +190,7 @@ void TGRUTint::ApplyOptions() {
   }
 
   if(opt->ExitAfterSorting()){
+    for (auto i=0u; i<200; i++) { std::cout << std::endl; }
     while(StoppableThread::AnyThreadRunning()){
       std::this_thread::sleep_for(std::chrono::seconds(1));
 
@@ -200,9 +201,15 @@ void TGRUTint::ApplyOptions() {
       gSystem->ProcessEvents();
       fAllowedToTerminate = true;
 
-      std::cout << "\r" << StoppableThread::AnyThreadStatus() << std::flush;
+      auto status = StoppableThread::AnyThreadStatus();
+      int num_newlines = count_newlines(status);
+      std::cout << "\r";
+      for(int i=0; i<num_newlines*100; i++){
+        std::cout << CURSOR_UP;
+       }
+      std::cout << status << std::flush;
     }
-    std::cout << std::endl;
+    //std::cout << std::endl;
 
     int exit_status = missing_raw_file ? 1 : 0;
     this->Terminate(exit_status);

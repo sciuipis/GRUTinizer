@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 #include <sys/stat.h>
 #include <glob.h>
@@ -93,4 +94,16 @@ bool is_bash_pattern(const std::string& pattern) {
           pattern.find("[") != std::string::npos ||
           pattern.find("]") != std::string::npos ||
           pattern.find("!") != std::string::npos);
+}
+
+int count_newlines(const std::string& str) {
+  std::stringstream ss(str);
+  int nlinebreaks = 0;
+  while (true){
+    std::string line;
+    std::getline(ss,line);
+    if (!ss.good()) { break; }
+    nlinebreaks++;
+  }
+  return nlinebreaks;
 }

@@ -128,19 +128,12 @@ std::string TMultiRawFile::SourceDescription(bool long_description) const{
 std::string TMultiRawFile::Status(bool long_description) const{
   std::lock_guard<std::mutex> lock(fFileListMutex);
 
-  std::stringstream ss;
-  if(!fIsFirstStatus){
-    for(unsigned int i = 0; i<fFileList.size(); i++) {
-      ss << CURSOR_UP;
-    }
-  }
-  fIsFirstStatus = false;
-
   size_t max_length = 0;
   for(auto& file : fFileList){
     max_length = std::max(max_length, file->SourceDescription(long_description).length());
   }
 
+  std::stringstream ss;
   for(auto& file : fFileList){
     ss << std::setw(max_length) << file->SourceDescription() << " " << file->Status() << "\n";
   }

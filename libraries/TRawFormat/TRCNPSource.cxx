@@ -7,6 +7,8 @@ extern std::atomic<int> stop_rcnp_signal;
 #include "GRUTinizerInterface.h"
 
 
+unsigned int TRCNPSource::fNumEvents = 0;
+
 TRCNPSource::TRCNPSource(const char* Command, kFileType file_type)
   : fCommand(Command), fFileType(file_type) {
 
@@ -20,7 +22,7 @@ TRCNPSource::TRCNPSource(const char* Command, kFileType file_type)
                          rcnp_queue.Push(event);
                        },
                        TGRUTOptions::Get()->SaveRCNPTree(),
-                       !TGRUTOptions::Get()->StartGUI()
+                       false//!TGRUTOptions::Get()->StartGUI()
     );
 
   //LoadFakeTimestamps();
@@ -96,17 +98,20 @@ int TRCNPSource::GetEvent(TRawEvent& event) {
   rcnp->SetTimestamp(time);
   event.SetFragmentTimestamp(time);
 
+  fNumEvents++;
   return sizeof(rcnp);
 }
 
 std::string TRCNPSource::Status(bool long_description) const {
-  return Form("%s: %s %8.2f MB given %s / %s  Unknown MB total %s  => %s %3.02f MB/s processed %s",
+    return Form("%s: %s %8d events given %s / %s  Unknown total %s  => %s >%3.02f MB/s unpacked %s",
               SourceDescription(long_description).c_str(),
-              DCYAN, GetBytesGiven()/1e6, RESET_COLOR,
+              DCYAN, fNumEvents, RESET_COLOR,
               BLUE, RESET_COLOR,
-              GREEN, GetAverageRate()/1e6, RESET_COLOR);
+              GREEN, GetAverageRate()*sizeof(RCNPEvent)/1e6, RESET_COLOR);
 }
-std::string TRCNPSource::SourceDescription(bool long_description) const {return "File: "+std::string("RCNP_BLD: ")+fCommand;}
+std::string TRCNPSource::SourceDescription(bool long_description) const {
+  return std::string("RCNP_BLD: ")+fCommand;
+}
 
 
 // template<>
