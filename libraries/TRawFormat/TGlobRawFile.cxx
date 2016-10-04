@@ -13,11 +13,10 @@ TGlobRawFile::TGlobRawFile(std::string pattern, kFileType file_type)
 
 void TGlobRawFile::CheckForFiles() {
   auto now = std::chrono::system_clock::now();
-  auto time_since_check = fPreviousCheck - now;
-  if(time_since_check > time_between_checks) {
+  auto time_since_check = now - fPreviousCheck;
+  if(time_since_check < time_between_checks){
     return;
   }
-
   for(auto& filename : glob(fPattern)) {
     if(fFilesAdded.count(filename) == 0) {
       auto new_file = TRawEventSource::EventSource(filename.c_str(),
