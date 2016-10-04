@@ -38,7 +38,6 @@
 #include "TMultiRawFile.h"
 #include "TOrderedRawFile.h"
 #include "TRawSource.h"
-#include "TGlobRawFile.h"
 #include "TSequentialRawFile.h"
 #include "TTerminalLoop.h"
 #include "TUnpackingLoop.h"
@@ -149,6 +148,7 @@ void TGRUTint::ApplyOptions() {
   if(opt->S800InverseMapFile().length()) {
     TInverseMap::Get(opt->S800InverseMapFile().c_str());
   }
+
   for(auto filename : opt->RootInputFiles()) {
     // this will populate gChain if able.
     //   TChannels from the root file will be loaded as file is opened.
@@ -357,7 +357,8 @@ void TGRUTint::SetupPipeline() {
 
   bool missing_raw_file = false;
   for(auto& filename : opt->RawInputFiles()) {
-    if(!file_exists(filename.c_str())) {
+    if(!is_bash_pattern(filename) &&
+       !file_exists(filename.c_str())) {
       missing_raw_file = true;
       std::cerr << "File not found: " << filename << std::endl;
     }
@@ -488,8 +489,6 @@ TRawEventSource* TGRUTint::OpenRawSource() {
 
   bool has_input_ring = opt->InputRing().length();
   bool has_raw_file = opt->RawInputFiles().size();
-  bool is_glob_source = opt->SortMultipleGlob().length();
-  bool is_multi_sort = opt->SortMultiple();
 
   TRawEventSource* source = NULL;
 
@@ -499,7 +498,7 @@ TRawEventSource* TGRUTint::OpenRawSource() {
                                           true, true,
                                           opt->DefaultFileType());
 
-  } else if(is_multi_sort && has_raw_file ){
+  } else if(has_raw_file && opt->SortMultiple()){
     // Open multiple files, read from all at the same time.
     TMultiRawFile* multi_source = new TMultiRawFile();
     for(auto& filename : opt->RawInputFiles()){
@@ -507,11 +506,7 @@ TRawEventSource* TGRUTint::OpenRawSource() {
     }
     source = multi_source;
 
-  } else if(is_glob_source) {
-    // Open multiple files, read from all at the same time.
-    TGlobRawFile* glob_multi_source = new TGlobRawFile(opt->SortMultipleGlob());
-    source = glob_multi_source;
-  } else if(!is_multi_sort && opt->RawInputFiles().size() > 1){
+  } else if(opt->RawInputFiles().size() > 1 && !opt->SortMultiple()){
     // Open multiple files, read from each one at a a time.
     TSequentialRawFile* seq_source = new TSequentialRawFile();
     for(auto& filename : opt->RawInputFiles()){
@@ -521,17 +516,10 @@ TRawEventSource* TGRUTint::OpenRawSource() {
 
   } else {
     // Open a single file.
-    if (opt->RawInputFiles().size()) {
-      std::string filename = opt->RawInputFiles().at(0);
-      if(file_exists(filename.c_str())){
-        source = new TRawFileIn(filename.c_str());
-      }
-    }
-    else if (opt->RootInputFiles().size()) {
-      std::string filename = opt->RootInputFiles().at(0);
-      if(file_exists(filename.c_str())){
-        source = TRawEventSource::EventSource(filename.c_str());
-      }
+    std::string filename = opt->RawInputFiles().at(0);
+    if(file_exists(filename.c_str()) ||
+       is_bash_pattern(filename)){
+      source = new TRawFileIn(filename.c_str());
     }
   }
 
