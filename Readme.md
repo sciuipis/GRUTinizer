@@ -154,12 +154,12 @@ To take advantage of these features all one has to do is start GRUTinizer!  They
 
 
 
-Add-on for the CAGRA+GR Campaign @ RCNP October 2016:
+## Add-on for the CAGRA+GR Campaign @ RCNP October 2016:
 --
 
 Most of the things explained above are still valid, such as the different options (flags) and universal commands. However, the syntax for the unpacking is a bit different. Furthermore, the working directory is:
 
-```/home/cagragr/ana/campaignOct2016/```
+/home/cagragr/ana/campaignOct2016/
 
 Online CAGRA example for the E450 experiments:
 --
@@ -208,3 +208,4 @@ General remarks
 
 * Go to ```/home/cagragr/ana/campaignOct2016``` and run the command ```grutsh``` before you can use grutinizer.
 * Energy calibration parameters for the individual detectors are defined in ```config/online.cal```
+
