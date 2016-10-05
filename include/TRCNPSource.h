@@ -52,8 +52,7 @@ private:
   std::future<void> fFuture;
   #endif
   ThreadsafeQueue<RCNPEvent*> rcnp_queue;
-
-  //std::queue<Long_t> timestamps;
+  static unsigned int fNumEvents;
 
   ClassDef(TRCNPSource,0);
 };

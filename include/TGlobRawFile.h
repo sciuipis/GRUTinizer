@@ -12,14 +12,12 @@
 
 class TGlobRawFile : public TRawEventSource {
 public:
-  TGlobRawFile(std::string pattern);
-  virtual ~TGlobRawFile(){;}
+  TGlobRawFile(std::string pattern, kFileType file_type = kFileType::UNKNOWN_FILETYPE);
 
-
-  virtual std::string SourceDescription(bool long_description) const {
+  virtual std::string SourceDescription(bool long_description=false) const {
     return fWrapped.SourceDescription(long_description);
   }
-  virtual std::string Status(bool long_description) const {
+  virtual std::string Status(bool long_description = false) const {
     return fWrapped.Status(long_description);
   }
 
@@ -42,6 +40,7 @@ private:
 
   std::string fPattern;
   std::set<std::string> fFilesAdded;
+  kFileType fFileType;
 #ifndef __CINT__
   std::chrono::system_clock::time_point fPreviousCheck;
 #endif

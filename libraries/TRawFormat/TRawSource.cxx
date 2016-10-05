@@ -1,7 +1,11 @@
 #include "TRawSource.h"
+
 #include <cassert>
+
 #include "TString.h"
+
 #include "TGRUTOptions.h"
+#include "TGlobRawFile.h"
 #include "TRCNPSource.h"
 
 ClassImp(TRawEventSource)
@@ -69,6 +73,10 @@ kFileType TRawEventSource::DefaultFileType() {
 TRawEventSource* TRawEventSource::EventSource(const char* filename,
                                               bool is_online, bool is_ring,
                                               kFileType file_type){
+  if(is_bash_pattern(filename)) {
+    return new TGlobRawFile(filename, file_type);
+  }
+
   if(file_type == kFileType::UNKNOWN_FILETYPE){
     if(is_ring){
       std::cerr << "File type determination does not work for ring sources" << std::endl;
@@ -100,6 +108,7 @@ TRawEventSource* TRawEventSource::EventSource(const char* filename,
     byte_source = new TBZipByteSource(filename);
   } else if (hasSuffix(filename,".gz")){
     byte_source = new TGZipByteSource(filename);
+  // Otherwise, open it as a normal file.
   } else {
     byte_source = new TFileByteSource(filename);
   }
@@ -161,16 +170,14 @@ int TRawEventTimestampSource::GetEvent(TRawEvent& rawevent) {
       break;
   }
 
-  const size_t header_size = sizeof(TRawEvent::RawHeader);
-
   rawevent.Clear();
   rawevent.SetFileType(fFileType);
 
-  int bytes_read_header = FillBuffer(header_size);
+  int bytes_read_header = FillBuffer(sizeof(TRawEvent::RawHeader));
   // If not enough was read, check the errno.
   // If it is 0, we may still receive more data. (e.g. reading from ring)
   // If it is nonzero, we are done. (e.g. end of file)
-  if(bytes_read_header < int(header_size)) {
+  if(bytes_read_header == 0) {
     if(GetLastErrno()){
       return -1;
     } else {
@@ -178,32 +185,25 @@ int TRawEventTimestampSource::GetEvent(TRawEvent& rawevent) {
     }
   }
 
-  memcpy(rawevent.GetRawHeader(), fCurrentBuffer.GetData(), header_size);
+  memcpy(rawevent.GetRawHeader(), fCurrentBuffer.GetData(), sizeof(TRawEvent::RawHeader));
+  fCurrentBuffer.Advance(sizeof(TRawEvent::RawHeader));
 
   if(!rawevent.IsGoodSize()) {
     SetLastErrno(-1);
     SetLastError("Invalid event size");
-    // Corrupt header, unlikely to ever recover,
-    //   but we can be hopeful.
-    fCurrentBuffer.Advance(header_size);
     return -3;
   }
 
   size_t body_size = rawevent.GetBodySize();
-  size_t total_bytes = header_size + body_size;
-  int bytes_read_body = FillBuffer(total_bytes);
-  if(bytes_read_body < 0 ||
-     bytes_read_body < int(total_bytes)){
+  int bytes_read_body = FillBuffer(body_size);
+  if(bytes_read_body < 0){
     return -2;
   }
 
-  rawevent.SetData(fCurrentBuffer.BufferSubset(header_size, body_size));
+  rawevent.SetData(fCurrentBuffer.BufferSubset(0, body_size));
+  fCurrentBuffer.Advance(body_size);
 
-  // Advancing past the header and body in a single step prevents
-  //   errors if the header has been completely written to disk,
-  //   but the body has not.
-  fCurrentBuffer.Advance(total_bytes);
-
+  size_t total_bytes = sizeof(TRawEvent::RawHeader) + body_size;
   return total_bytes;
 }
 
