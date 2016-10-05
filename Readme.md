@@ -150,3 +150,61 @@ To take advantage of these features all one has to do is start GRUTinizer!  They
 |        | All normal root commands/interactions.|
 | **p**  | Print the graph to the terminal.
 
+
+
+
+
+Add-on for the CAGRA+GR Campaign @ RCNP October 2016:
+--
+
+Most of the things explained above are still valid, such as the different options (flags) and universal commands. However, the syntax for the unpacking is a bit different. Furthermore, the working directory is:
+
+```/home/cagragr/ana/campaignOct2016/```
+
+Online CAGRA example for the E450 experiments:
+--
+``` ./bin/grutinizer -Hmg lib/libRCNPhistos.so config/online.cal config/rcnp_constants.cal "data/cagra/E450/run_1044.gtd03_000_0109" data/gr/E450/run1044.bld -o /dev/null ```
+
+* Note: the path for the CAGRA data has to be given in quotation marks in contrast to the GR data!
+* The file name ```run_1044.gtd03_000_0109``` is composed of:
+
+  **- run number: 1044**
+
+  **- IOC number: gtd03 -> IOC 3**
+
+  **- file number: 000 (first file recorded for IOC 3)**
+
+  **- boardID: 0109**
+
+  **- after 2GB another file is opened, e.g., run_1044.gtd03_001_0109**
+
+* To unpack all files for a given IOC replace ```run_1044.gtd03_000_0109``` by ```run_1044.gtd03_*```
+* To unpack all files replace ```run_1044.gtd03_000_0109``` by ```run_1044.gtd0*```
+
+
+Offline CAGRA example for the E450 experiments:
+--
+
+* For an offline analysis I'd suggest to unpack the data into a root file without creating histograms and opening the GUI. The option ```-qm``` takes care of this:
+
+```./bin/grutinizer -qm lib/libRCNPhistos.so config/online.cal config/rcnp_constants.cal "data/cagra/E450/run_1044.gtd0*" data/gr/E450/run1044.bld -o run1044.root```
+
+* The data from CAGRA and GR are now sorted into combined events. Create a root file ```hist1044.root``` including the histograms defined in ```histos/RCNPhistos.cxx```:
+
+```./bin/grutinizer -H lib/libRCNPhistos.so config/online.cal config/rcnp_constants.cal run1044.root```
+
+* The ```hist1044.root``` can be loaded into the the GUI by:
+
+```./bin/grutinizer -g hist1044.root```
+
+* Use ```-Hg``` to simultaneously open the GUI while creating the histograms.
+
+General remarks
+--
+
+* If the grutinizer crashes you can open a new terminal and log into miho-1:
+
+```> ssh -Y cagragr@miho-1```
+
+* Go to ```/home/cagragr/ana/campaignOct2016``` and run the command ```grutsh``` before you can use grutinizer.
+* Energy calibration parameters for the individual detectors are defined in ```config/online.cal```
