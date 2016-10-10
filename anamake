@@ -1,0 +1,38 @@
+data_dir = /mnt/analysis/rcnp-e441/
+rootfiles_subdir = 
+histo_lib = lib/libRCNPhistos.so
+other_config_files = 
+grutinizer = grutinizer
+detector_env =
+channels =
+values = 
+cuts =
+
+# A few configuration options for make
+.PHONY: all clean histogram
+.SECONDARY:
+.SECONDEXPANSION:
+
+# Determine all the output files to be constructed
+root_files   := $(wildcard $(data_dir)/$(rootfiles_subdir)/run*.root)
+hist_files  := $(patsubst $(data_dir)/$(rootfiles_subdir)/run%.root,histfiles/run%.root,$(root_files))
+
+all: histfiles/merged.root
+
+histogram: $(hist_files)
+
+rootfiles histfiles:
+	mkdir -p $@
+
+histfiles/run%.root: $(data_dir)/$(rootfiles_subdir)/run%.root \
+                     $$(wildcard run-by-run/run%.val) \
+                     $$(wildcard run-by-run/run%.cal) | histfiles
+	$(grutinizer) -lqH $(histo_lib) $^ $(channels) $(values) $(wildcard run-by-run/run%.val) $(wildcard run-by-run/run%.cal) $(other_config_files) --hist-output=$@
+
+histfiles/merged.root: $(hist_files)
+	gadd_fast.py -j10 -f $@ $^
+
+print-%  : ; @echo $* = $($*)
+
+clean:
+	rm -rf rootfiles histfiles

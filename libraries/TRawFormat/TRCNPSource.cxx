@@ -86,7 +86,7 @@ int TRCNPSource::GetEvent(TRawEvent& event) {
       static int not_found = 0;
       if (not_found < 100) {
         std::cout << "GR Myriad timestamp not found!!!" << std::endl;
-        if (not_found == 99) {
+        if (not_found++ == 99) {
           std::cout << "More than 100 GR events are missing a timestamp. This warning is being supressed, but you should probably investigate this." << std::endl;
         }
       }
