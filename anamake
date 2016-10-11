@@ -1,11 +1,12 @@
-data_dir = /mnt/analysis/rcnp-e441/
-rootfiles_subdir = 
+inputfiles = inputfiles.dat
+data_dir = /np1a/cagra/gr/2016campaign
+rootfiles_subdir = rootfiles/E450
 histo_lib = lib/libRCNPhistos.so
 other_config_files = 
-grutinizer = grutinizer
+grutinizer = ./bin/grutinizer
 detector_env =
-channels =
-values = 
+channels = config/online_recabling.cal
+values =  config/rcnp_constants.val
 cuts =
 
 # A few configuration options for make
@@ -14,8 +15,11 @@ cuts =
 .SECONDEXPANSION:
 
 # Determine all the output files to be constructed
-root_files   := $(wildcard $(data_dir)/$(rootfiles_subdir)/run*.root)
-hist_files  := $(patsubst $(data_dir)/$(rootfiles_subdir)/run%.root,histfiles/run%.root,$(root_files))
+root_files   := $(shell cat ${inputfiles})
+# root_files := $(wildcard $(data_dir)/$(rootfiles_subdir)/Run*/run*.root)
+hist_files   := $(addprefix histfiles/,$(notdir $(root_files)))
+#hist_files   := $(join  $(patsubst $(data_dir)/$(rootfiles_subdir)/Run%/run,)  )
+test := $(notdir $(rootfiles))
 
 all: histfiles/merged.root
 
@@ -24,13 +28,13 @@ histogram: $(hist_files)
 rootfiles histfiles:
 	mkdir -p $@
 
-histfiles/run%.root: $(data_dir)/$(rootfiles_subdir)/run%.root \
+histfiles/run%.root: $$(data_dir)/$(rootfiles_subdir)/Run%/run*.root \
                      $$(wildcard run-by-run/run%.val) \
                      $$(wildcard run-by-run/run%.cal) | histfiles
 	$(grutinizer) -lqH $(histo_lib) $^ $(channels) $(values) $(wildcard run-by-run/run%.val) $(wildcard run-by-run/run%.cal) $(other_config_files) --hist-output=$@
 
 histfiles/merged.root: $(hist_files)
-	gadd_fast.py -j10 -f $@ $^
+	python3 util/gadd_fast.py -j4 -f $@ $^
 
 print-%  : ; @echo $* = $($*)
 
