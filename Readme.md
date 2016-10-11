@@ -191,7 +191,7 @@ Offline CAGRA example for the E450 experiments:
 
 * The data from CAGRA and GR are now sorted into combined events. Create a root file ```hist1044.root``` including the histograms defined in ```histos/RCNPhistos.cxx```:
 
-```./bin/grutinizer -H lib/libRCNPhistos.so config/online.cal config/rcnp_constants.cal run1044.root```
+```./bin/grutinizer -qH lib/libRCNPhistos.so config/online.cal config/rcnp_constants.cal run1044.root```
 
 * The ```hist1044.root``` can be loaded into the the GUI by:
 
