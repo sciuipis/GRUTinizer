@@ -22,10 +22,12 @@ class TANLEvent : public TObject {
     UShort_t GetBoardID()   const { return board_id; }
     UShort_t GetChannel()   const { return channel; }
     Long_t   GetPrevDisc()   const { return disc_prev; }
-    UShort_t GetPostBegin() const { return postrise_begin_sample; }
-    UShort_t GetPostEnd() const { return postrise_end_sample; }
-    UShort_t GetPreBegin() const { return prerise_begin_sample; }
-    UShort_t GetPreEnd() const { return prerise_end_sample; }
+    Short_t GetPostBegin() const { return postrise_begin_sample; }
+    Short_t GetPostEnd() const { return postrise_end_sample; }
+    Short_t GetPrevPostBegin() const { return prev_postrise_begin_sample; }
+    Short_t GetPrevPostEnd() const { return prev_postrise_end_sample; }
+    Short_t GetPreBegin() const { return prerise_begin_sample; }
+    Short_t GetPreEnd() const { return prerise_end_sample; }
     UShort_t GetFlags() const { return flags; }
     UShort_t GetBaseSample() const { return base_sample; }
     static Float_t& GetShapingTime() {
@@ -75,11 +77,14 @@ class TANLEvent : public TObject {
     UInt_t prerise_energy;
     UInt_t postrise_energy;
     //ULong_t peak_timestamp;
-    UShort_t postrise_end_sample;
-    UShort_t postrise_begin_sample;
-    UShort_t prerise_end_sample;
-    UShort_t prerise_begin_sample;
+    Short_t postrise_end_sample;
+    Short_t postrise_begin_sample;
+    Short_t prerise_end_sample;
+    Short_t prerise_begin_sample;
     UShort_t base_sample;
+
+    Short_t prev_postrise_begin_sample;
+    Short_t prev_postrise_end_sample;
     //UShort_t peak_sample;
     std::vector<Short_t> wave_data;
 

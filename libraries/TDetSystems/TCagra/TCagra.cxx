@@ -211,8 +211,9 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
     hit->SetPostRise(anl.GetPostE());
     hit->SetFlags(anl.GetFlags());
     hit->SetBaseSample(anl.GetBaseSample());
-
-
+    hit->SetPrevPostRiseBeginSample(anl.GetPrevPostBegin());
+    hit->SetPreRiseEndSample(anl.GetPreEnd());
+    hit->SetPreRiseBeginSample(anl.GetPreBegin());
 
   }
 

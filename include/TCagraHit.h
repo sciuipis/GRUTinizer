@@ -58,6 +58,13 @@ class TCagraHit : public TDetectorHit {
     void SetPostRise(Double_t postrise) { postrise_energy = postrise; }
     Double_t GetPreRise() { return prerise_energy; }
     Double_t GetPostRise() { return postrise_energy; }
+    Short_t GetPrevPostRiseBeginSample() { return prev_postrise_begin_sample; }
+    Short_t GetPreRiseBeginSample() { return prerise_begin; }
+    Short_t GetPreRiseEndSample() { return prerise_end; }
+    void SetPrevPostRiseBeginSample(UShort_t val) { prev_postrise_begin_sample = val; }
+    void SetPreRiseBeginSample(UShort_t val) { prerise_begin = val; }
+    void SetPreRiseEndSample(UShort_t val) { prerise_end = val; }
+
     void SetFlags(UShort_t fl) { flags = fl; }
     const UShort_t& GetFlags() const { return flags; }
     void SetBaseSample(UShort_t base) { base_sample = base; }
@@ -65,6 +72,7 @@ class TCagraHit : public TDetectorHit {
     std::vector<Short_t>* GetTrace(int segnum=0);
     void SetTrace(std::vector<Short_t>& trace);
     void DrawTrace(int segnum);
+    void DrawTraceSamples(int segnum);
     double GetTraceHeight() const;
     double GetTraceHeightDoppler(double beta,const TVector3& vec = TVector3(0,0,1)) const;
     Double_t GetTraceEnergy(const UShort_t& a,const UShort_t& b,UShort_t x = 0,UShort_t y=0) const;
@@ -78,6 +86,13 @@ class TCagraHit : public TDetectorHit {
     Double_t prerise_energy;
     Double_t postrise_energy;
     UShort_t base_sample;
+
+    // trace points for base line determination
+    Short_t prev_postrise_begin_sample;
+    Short_t prerise_begin;
+    Short_t prerise_end;
+
+
     //Double_t fPZEnergy;
 
   ClassDef(TCagraHit,1);

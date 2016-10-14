@@ -213,6 +213,27 @@ void TCagraHit::DrawTrace(int segnum) {
   hist.DrawCopy();
 }
 
+void TCagraHit::DrawTraceSamples(int segnum) {
+  std::vector<Short_t> trace(3);
+  trace[0] = prev_postrise_begin_sample;
+  trace[1] = prerise_begin;
+  trace[2] = prerise_end;
+
+  TH1I hist("hist", "", trace.size(), 0, 10*trace.size());
+  hist.SetStats(false);
+
+  if(segnum==0){
+    hist.SetTitle(Form("CAGRA Detector %d at %ld ns", GetDetnum(), Timestamp()));
+    //hist.GetXaxis()->SetTitle("Time (ns)");
+    //hist.GetYaxis()->SetTitle("ADC units");
+  }
+
+  for(size_t i=0; i<trace.size(); i++) {
+    hist.SetBinContent(i+1,trace[i]);
+  }
+  hist.DrawCopy();
+}
+
 void TCagraHit::SetTrace(std::vector<Short_t>& trace) {
   fTrace.clear();
   fTrace.swap(trace);
