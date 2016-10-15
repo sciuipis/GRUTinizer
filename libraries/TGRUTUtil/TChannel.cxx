@@ -242,7 +242,11 @@ bool TChannel::AppendChannel(TChannel *oldchan) {
   if(this->GetTimeCoeff().size()>0)
      oldchan->SetTimeCoeff(this->GetTimeCoeff());
   if(this->GetEnergyCoeff().size()>0)
-     oldchan->SetEnergyCoeff(this->GetEnergyCoeff());
+    oldchan->SetEnergyCoeff(this->GetEnergyCoeff());
+  if(this->GetPoleZeroCoeff().size()>0)
+    oldchan->SetPoleZeroCoeff(this->GetPoleZeroCoeff());
+  if(this->GetBaselineCoeff().size()>0)
+    oldchan->SetBaselineCoeff(this->GetBaselineCoeff());
   if(this->GetEfficiencyCoeff().size()>0)
      oldchan->SetEfficiencyCoeff(this->GetEfficiencyCoeff());
   return true;
