@@ -184,7 +184,9 @@ Double_t TCagraHit:: GetTraceBaseline() {
     int length = std::min<int>(6,trace->size());
     Double_t bl = 0;
     for (int i=0; i<length; i++) {
-      bl+=(*trace)[i];
+      auto adc = (*trace)[i];
+      adc = (adc < 0) ? adc + std::pow(2,14) : adc;
+      bl+=adc;
     }
     return bl/length;
   }
@@ -206,9 +208,10 @@ void TCagraHit::DrawTrace(int segnum) {
     hist.GetXaxis()->SetTitle("Time (ns)");
     hist.GetYaxis()->SetTitle("ADC units");
   }
-
   for(size_t i=0; i<trace->size(); i++) {
-    hist.SetBinContent(i+1,(*trace)[i]);
+    auto adc = (*trace)[i];
+    adc = (adc < 0) ? adc + std::pow(2,14) : adc;
+    hist.SetBinContent(i+1,adc);
   }
   hist.DrawCopy();
 }

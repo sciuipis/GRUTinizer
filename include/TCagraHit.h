@@ -95,7 +95,7 @@ class TCagraHit : public TDetectorHit {
 
     //Double_t fPZEnergy;
 
-  ClassDef(TCagraHit,1);
+  ClassDef(TCagraHit,2);
 };
 
 
