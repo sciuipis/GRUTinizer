@@ -30,6 +30,7 @@ class TANLEvent : public TObject {
     Short_t GetPreEnd() const { return prerise_end_sample; }
     UShort_t GetFlags() const { return flags; }
     UShort_t GetBaseSample() const { return base_sample; }
+    UShort_t GetBaseline() const { return sampled_baseline; }
     static Float_t& GetShapingTime() {
         if (std::isnan(shaping_time)) { shaping_time = GValue::Value("ShapingTime"); }
         return shaping_time;
@@ -82,6 +83,8 @@ class TANLEvent : public TObject {
     Short_t prerise_end_sample;
     Short_t prerise_begin_sample;
     UShort_t base_sample;
+    UShort_t sampled_baseline;
+
 
     Short_t prev_postrise_begin_sample;
     Short_t prev_postrise_end_sample;

@@ -69,6 +69,8 @@ class TCagraHit : public TDetectorHit {
     const UShort_t& GetFlags() const { return flags; }
     void SetBaseSample(UShort_t base) { base_sample = base; }
     const UShort_t& GetBaseSample() const { return base_sample; }
+    void SetSampledBaseline(UShort_t base) { sampled_baseline = base; }
+    const UShort_t& GetSampledBaseline() const { return sampled_baseline; }
     std::vector<Short_t>* GetTrace(int segnum=0);
     void SetTrace(std::vector<Short_t>& trace);
     void DrawTrace(int segnum);
@@ -85,7 +87,8 @@ class TCagraHit : public TDetectorHit {
     UShort_t flags;
     Double_t prerise_energy;
     Double_t postrise_energy;
-    UShort_t base_sample;
+    UShort_t base_sample; // running sum
+    UShort_t sampled_baseline; // event by event
 
     // trace points for base line determination
     Short_t prev_postrise_begin_sample;

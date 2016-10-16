@@ -78,6 +78,7 @@ TANLEvent::TANLEvent(TSmartBuffer& buf) : d_cfd(0.) {
     // postrise_end_sample = data->GetPostRiseSampleEnd();
     // prerise_end_sample = data->GetPreRiseSampleEnd();
     base_sample = data->GetBaseSample();
+    sampled_baseline = data->GetBaseline();
 
     size_t wave_bytes = header->GetLength()*4 - sizeof(*header) - sizeof(*data); // labr 1.52us
     // // trace analysis here
@@ -108,6 +109,7 @@ TANLEvent::TANLEvent(TSmartBuffer& buf) : d_cfd(0.) {
     postrise_end_sample = data->GetPostRiseSampleEnd();
     prerise_end_sample = data->GetPreRiseSampleEnd();
     base_sample = data->GetBaseSample();
+    sampled_baseline = data->GetBaseline();
 
     prev_postrise_begin_sample = data->GetLastPostRiseEnterSample();
 
