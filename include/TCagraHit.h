@@ -2,7 +2,6 @@
 #define TCagraHIT_H
 
 #include "TDetectorHit.h"
-//#include "TCagraSegmentHit.h"
 
 class TCagraHit : public TDetectorHit {
   public:
@@ -53,6 +52,9 @@ class TCagraHit : public TDetectorHit {
 
     void SetDiscTime(const Double_t t) { time = t; }
     Double_t GetDiscTime() { return time; }
+    void SetPrevDiscTime(const Double_t t) { prev_time = t; }
+    Double_t GetPrevDiscTime() { return prev_time; }
+
     Double_t GetCorrectedEnergy(Double_t asym_bl=0.);
     void SetPreRise(Double_t prerise) { prerise_energy = prerise; }
     void SetPostRise(Double_t postrise) { postrise_energy = postrise; }
@@ -80,11 +82,20 @@ class TCagraHit : public TDetectorHit {
     Double_t GetTraceEnergy(const UShort_t& a,const UShort_t& b,UShort_t x = 0,UShort_t y=0) const;
     Double_t GetTraceBaseline();
 
+    Double_t GetBaselineExpCorr(int segnum=0);
+    Double_t GetBaselineExpCorrFast(int segnum=0);
+    void DrawBaselineExponential(int segnum=0);
+
   private:
     std::vector<Short_t> fTrace;
     std::vector<TCagraHit> fSegments;
+    bool baseline_fitted;
+
     Double_t time;
+    Double_t prev_time;
+
     UShort_t flags;
+
     Double_t prerise_energy;
     Double_t postrise_energy;
     UShort_t base_sample; // running sum
@@ -96,7 +107,18 @@ class TCagraHit : public TDetectorHit {
     Short_t prerise_end;
 
 
-    //Double_t fPZEnergy;
+    inline Double_t transform_trace_point(Double_t point) {
+        //auto adc = (point < 0) ? point + std::pow(2,14) : point;
+        //return adc;
+        auto adc = (point < 0) ? point + std::pow(2,14) : point;
+        adc = 8192 - adc;
+        return adc + 1000;
+    }
+
+    inline Double_t inverse_transform_trace_point(Double_t point) {
+        point -= 1000;
+        return 8192 - point;
+    }
 
   ClassDef(TCagraHit,2);
 };

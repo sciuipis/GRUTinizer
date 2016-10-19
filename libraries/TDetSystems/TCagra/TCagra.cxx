@@ -207,6 +207,7 @@ int TCagra::BuildHits(std::vector<TRawEvent>& raw_data){
     hit->SetAddress(address);
     hit->SetTimestamp(event.GetTimestamp());
     hit->SetDiscTime(anl.GetCFD());
+    hit->SetPrevDiscTime(anl.GetPrevDisc());
     hit->SetPreRise(anl.GetPreE());
     hit->SetPostRise(anl.GetPostE());
     hit->SetFlags(anl.GetFlags());
