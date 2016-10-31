@@ -75,12 +75,15 @@ class TCagraHit : public TDetectorHit {
     const UShort_t& GetSampledBaseline() const { return sampled_baseline; }
     std::vector<Short_t>* GetTrace(int segnum=0);
     void SetTrace(std::vector<Short_t>& trace);
-    void DrawTrace(int segnum);
+    void DrawTrace(int segnum, bool draw_baseline=false);
+    void DrawTraceBaseline(int segnum);
+
     void DrawTraceSamples(int segnum);
-    double GetTraceHeight() const;
+    double GetTraceHeight(size_t size=10) const;
     double GetTraceHeightDoppler(double beta,const TVector3& vec = TVector3(0,0,1)) const;
     Double_t GetTraceEnergy(const UShort_t& a,const UShort_t& b,UShort_t x = 0,UShort_t y=0) const;
     Double_t GetTraceBaseline();
+    void SetTimingMarks(std::vector<UShort_t>& marks) { fMarks.swap(marks); }
 
     Double_t GetBaselineExpCorr(int segnum=0);
     Double_t GetBaselineExpCorrFast(int segnum=0);
@@ -88,6 +91,7 @@ class TCagraHit : public TDetectorHit {
 
   private:
     std::vector<Short_t> fTrace;
+    std::vector<UShort_t> fMarks;
     std::vector<TCagraHit> fSegments;
     bool baseline_fitted;
 
@@ -106,6 +110,7 @@ class TCagraHit : public TDetectorHit {
     Short_t prerise_begin;
     Short_t prerise_end;
 
+    Double_t fit_params[2]; //!
 
     inline Double_t transform_trace_point(Double_t point) {
         //auto adc = (point < 0) ? point + std::pow(2,14) : point;

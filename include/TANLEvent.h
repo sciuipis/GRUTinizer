@@ -65,6 +65,7 @@ class TANLEvent : public TObject {
     double   GetEnergy() const { return ((GetPostE() - GetPreE())/GetShapingTime()); }
     Double_t GetCFD() const { return (Double_t)discriminator + d_cfd; }
     std::vector<Short_t>& GetTrace() { return wave_data; }
+    std::vector<UShort_t>& GetTimingMarks() { return timing_marks; }
 
   private:
     static Float_t shaping_time;
@@ -95,6 +96,7 @@ class TANLEvent : public TObject {
     Short_t prev_postrise_end_sample;
     //UShort_t peak_sample;
     std::vector<Short_t> wave_data;
+    std::vector<UShort_t> timing_marks;
 
   ClassDef(TANLEvent,0);
 };

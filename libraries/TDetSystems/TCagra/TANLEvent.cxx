@@ -85,6 +85,10 @@ TANLEvent::TANLEvent(TSmartBuffer& buf) : d_cfd(0.) {
     // // trace analysis here
     for (auto i=0u; i<wave_bytes; i+=sizeof(UShort_t)) {
       UShort_t swapped = TRawEvent::SwapShort(((UShort_t*)buf.GetData())[0]);
+      UShort_t mark = (((UShort_t*)buf.GetData())[0] & 0x8000) >> 15;
+      if (mark) {
+        timing_marks.push_back(i);
+      }
       Short_t tracept = TRawEvent::GetSigned14BitFromUShort(swapped);
       wave_data.push_back(tracept);
       buf.Advance(sizeof(UShort_t));
@@ -116,9 +120,14 @@ TANLEvent::TANLEvent(TSmartBuffer& buf) : d_cfd(0.) {
 
 
     size_t wave_bytes = header->GetLength()*4 - sizeof(*header) - sizeof(*data); // labr 1.52us
+
     // // trace analysis here
     for (auto i=0u; i<wave_bytes; i+=sizeof(UShort_t)) {
       UShort_t swapped = TRawEvent::SwapShort(((UShort_t*)buf.GetData())[0]);
+      UShort_t mark = (((UShort_t*)buf.GetData())[0] & 0x8000) >> 15;
+      if (mark) {
+        timing_marks.push_back(i);
+      }
       Short_t tracept = TRawEvent::GetSigned14BitFromUShort(swapped);
       wave_data.push_back(tracept);
       buf.Advance(sizeof(UShort_t));

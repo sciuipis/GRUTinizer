@@ -24,7 +24,7 @@
 
 ClassImp(TCagraHit)
 
-TCagraHit::TCagraHit() : prerise_energy(0), postrise_energy(0) {
+TCagraHit::TCagraHit() : prerise_energy(0), postrise_energy(0), fit_params({}) {
 }
 
 TCagraHit::~TCagraHit() {
@@ -408,6 +408,7 @@ Double_t TCagraHit::GetBaselineExpCorrFast(int segnum) {
 
   time[1] = time[2] - shaping_time;
 
+  std:: cout<< time[0] << " " << time[1] << " " << time[2] << std::endl;
 
   wrapper = [&time,&sample](const Double_t* params) {
     Double_t sum_chi2 = 0.0;
@@ -428,6 +429,9 @@ Double_t TCagraHit::GetBaselineExpCorrFast(int segnum) {
   minuit->SetVariable(1,"lambda",5.0e-5,1.0e-6);
   minuit->Minimize();
   auto params = minuit->X();
+  fit_params[0] = params[0];
+  fit_params[1] = params[1];
+
   if (std::isnan(params[0]) || std::isnan(params[1])) {
     //std::cout << "nan in fit" << std::endl <<std::endl;;
     return 0.0;
@@ -461,15 +465,25 @@ Double_t TCagraHit::GetBaselineExpCorrFast(int segnum) {
   return energy;
 }
 
-
-void TCagraHit::DrawTrace(int segnum) {
+void TCagraHit::DrawTraceBaseline(int segnum) {
   std::vector<Short_t>* trace = GetTrace(segnum);
   if(!trace){
     std::cout << "No segment trace found for segment " << segnum << std::endl;
     return;
   }
 
-  TH1I hist("hist", "", trace->size(), 0, 10*trace->size());
+  // create base line fit
+  GetBaselineExpCorrFast();
+
+  Double_t tprev_postrise_enter = prev_time + GValue::Value("d_window")*100 + GValue::Value("k_window")*100;
+  auto time = Timestamp()-tprev_postrise_enter;
+  time -= 150; // offset to beginning of trace window
+  std::cout << time << std::endl;
+
+  TH1I hist("hist", "", (time+450), 0, 10*(time+450));
+  TH1I basehist("baseline", "", (time+450), 0, 10*(time+450));
+
+
   hist.SetStats(false);
 
   if(segnum==0){
@@ -477,11 +491,70 @@ void TCagraHit::DrawTrace(int segnum) {
     hist.GetXaxis()->SetTitle("Time (ns)");
     hist.GetYaxis()->SetTitle("ADC units");
   }
+
+
+
+  for(size_t i=0; i<(time+450); i++) {
+
+    if (i >= time) {
+      auto n=i-time;
+      auto adc = (((*trace)[n]) < 0) ? (*trace)[n] + std::pow(2,14) : (*trace)[n];
+      hist.SetBinContent(i+1,adc);
+    }
+
+    auto fitadc = baseline_exp(i,fit_params);
+    fitadc = inverse_transform_trace_point(fitadc);
+    basehist.SetBinContent(i+1,fitadc);
+  }
+  hist.DrawCopy();
+  basehist.SetLineWidth(2);
+  basehist.SetLineColor(kRed);
+  basehist.DrawCopy("same");
+}
+
+
+void TCagraHit::DrawTrace(int segnum, bool draw_baseline) {
+  std::vector<Short_t>* trace = GetTrace(segnum);
+  if(!trace){
+    std::cout << "No segment trace found for segment " << segnum << std::endl;
+    return;
+  }
+
+  Double_t time = 0.0;
+  if (draw_baseline) {
+    GetBaselineExpCorrFast();
+    Double_t tprev_postrise_enter = prev_time + GValue::Value("d_window")*100 + GValue::Value("k_window")*100;
+    time = Timestamp()-tprev_postrise_enter;
+    time -= 150; // offset to beginning of trace window
+  }
+  TH1I hist("hist", "", trace->size(), 0, 10*trace->size());
+  TH1I basehist("baseline", "", trace->size(), 0, 10*trace->size());
+
+  hist.SetStats(false);
+
+  if(segnum==0){
+    hist.SetTitle(Form("CAGRA Detector %d at %ld ns", GetDetnum(), Timestamp()));
+    hist.GetXaxis()->SetTitle("Time (ns)");
+    hist.GetYaxis()->SetTitle("ADC units");
+  }
+
+
+
   for(size_t i=0; i<trace->size(); i++) {
     auto adc = (((*trace)[i]) < 0) ? (*trace)[i] + std::pow(2,14) : (*trace)[i];
     hist.SetBinContent(i+1,adc);
+    if (draw_baseline && fit_params[0]){
+      auto fitadc = baseline_exp(time+i,fit_params);
+      fitadc = inverse_transform_trace_point(fitadc);
+      basehist.SetBinContent(i+1,fitadc);
+    }
   }
+
   hist.DrawCopy();
+  if (draw_baseline && fit_params[0]){
+    basehist.SetLineColor(kRed);
+    basehist.DrawCopy("same");
+  }
 }
 
 void TCagraHit::DrawTraceSamples(int segnum) {
@@ -522,19 +595,19 @@ std::vector<Short_t>* TCagraHit::GetTrace(int segnum) {
   return NULL;
 }
 
-double TCagraHit::GetTraceHeight() const {
-  if(fTrace.size() < 20){
+double TCagraHit::GetTraceHeight(size_t size) const {
+  if(fTrace.size() < 2*size){
     return std::sqrt(-1);
   }
 
   double low = 0;
   double high = 0;
-  for(unsigned int i=0; i<10; i++){
+  for(unsigned int i=0; i<size; i++){
     low += fTrace[i];
     high += fTrace[fTrace.size()-i-1];
   }
 
-  return (high-low)/10;
+  return (high-low*0.93)/size;
 }
 
 double TCagraHit::GetTraceHeightDoppler(double beta,const TVector3& vec) const {
