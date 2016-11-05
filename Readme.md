@@ -159,7 +159,8 @@ To take advantage of these features all one has to do is start GRUTinizer!  They
 
 Most of the things explained above are still valid, such as the different options (flags) and universal commands. However, the syntax for the unpacking is a bit different. Furthermore, the working directory is:
 
-/home/cagragr/ana/campaignOct2016/
+It was supposed to be: /home/cagragr/ana/campaignOct2016/, BUT it turned out not to be :-D
+So the working directory is actually is: /home/cagragr/ana/jisaak/template_campaign
 
 Online CAGRA example for the E450 experiments:
 --
@@ -202,10 +203,28 @@ Offline CAGRA example for the E450 experiments:
 General remarks
 --
 
-* If the grutinizer crashes you can open a new terminal and log into miho-1:
+* If the grutinizer crashes you can open a new terminal and log into miho-1, miho-2, aino-1 or aino-2:
 
 ```> ssh -Y cagragr@miho-1```
 
-* Go to ```/home/cagragr/ana/campaignOct2016``` and run the command ```grutsh``` before you can use grutinizer.
-* Energy calibration parameters for the individual detectors are defined in ```config/online.cal```
+* Go to ```/home/cagragr/ana/jisaak/template_campaign``` and run the command ```grutsh``` before you can use grutinizer.
+* Energy calibration parameters for the individual detectors are defined in ```config/online.cal``` or other similar named files. Please check or ask current shifts.
 
+ToDo's during experiment shifts
+--
+
+* After a new run is started please make an entry into the logbook. Please make sure that you DO NOT use a run number in the CAGRA DAQ which already exists otherwise the DAQ crashes and has to be restarted hardware-wise.
+
+* Start grutinizer for the new run and check at least if we have true coincidences between GR and CAGRA. Therefore, open in the GUI of grutinizer the directory ```COIN``` and check the time-difference spectra named ```Diff_CAGRA_GR``` and ```Diff_CAGRA_GR_Cond```. The first spectrum shows the time-difference without any conditions/cuts on anything, while the second spectrum applied a cut on the X_TH in the GR to clean-up the spectrum. In both spectra prompt peaks around bin=250 should be visible.
+
+* Check from time to time if the rates shown in the VME windows of the CAGRA DAQ are updating and or not frozen or something like this.
+
+* Check the Buffer of each VME. It happened sometimes that they ran full and the DAQ crashed and it had to be restarted hardware-wise in the experimental area. The Buffers usually oscillate between 390 and 400.
+
+* Check the Rate Meter of GR for the rates and live times. Every 4-6 hours the GR DAQ suddenly has shows live times < 2%. This will be also visible in the CAGRA rates, because less coincidences are written, obviously. The reason for the sudden dead time rise is unclear at the moment.
+
+* If one of the checks is negative stop the current run and start a new one. Please leave a comment in the logbook. If the problems still occur please contact one of the Core Member: Tamii, Kobayashi or Isaak.
+
+* After you started a new run please unpack the previous one. The CAGRA and GR raw data will be sorted and events are created and saved into a root file. There exists a script in the working directory called ```sort_raw```. It's better to open a new terminal, e.g. by typing in the current console ```xterm &``` and run the script with the respective run number XXXX: ```./sort_raw XXXX```. The unpacked data are written to ```data/rootfiles/E450/RunXXXX```.
+
+* You can check if there are runs which where not unpacked by now and make up for it. Open a new xterm and do as described above. I suggest to run at maximum 3 unpacking procedures simultaneously.
