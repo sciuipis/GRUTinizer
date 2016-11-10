@@ -12,14 +12,6 @@ import matplotlib.gridspec as gridspec
 from scipy.optimize import curve_fit
 
 
-def Bfit(var,c000,c001,c010,c011,c100,c101,c110,c111):
-    x,a,y = var
-    return c000+c001*y+c010*a+c011*y*a+c100*x+c101*y*x+c110*a*x+c111*x*a*y
-
-# def bfit(var,*c):
-#     x,a,y = var
-#     return c[0]+c[1]*y+c[2]*a+c[3]*y*a+c[4]*x+c[5]*y*x+c[6]*a*x+c[7]*x*a*y
-
 
 def Afit(var,a0,a1,a2):
     x,a = var
@@ -34,7 +26,9 @@ class SieveSlitFit(object):
         self.x = []
         self.parse(filepath)
         self.degree_y=1
-        #SieveSliteFit.global_degree=3
+        SieveSlitFit.global_x = 3
+        SieveSlitFit.global_a = 3
+        SieveSlitFit.global_y = 2
 
     def parse(self,filepath):
         B = set()
@@ -153,9 +147,7 @@ class SieveSlitFit(object):
                 domainx.append(x)
                 domaina.append(a)
 
-        print len(domainx),len(domaina)
         rangez = [interpolant(x,domaina[i])[0] for i,x in enumerate(domainx)]
-        #print rangez
 
 
         fig = plt.figure()
@@ -181,15 +173,15 @@ class SieveSlitFit(object):
     def global_fit(self):
         xvals,avals,yvals,Bvals = self.prepare_global_fit_data()
         data = (xvals,avals,yvals)
-        popt,pcov = curve_fit(bfit,data,Bvals,p0=[1]*pow(SieveSlitFit.global_degree+1,len(data)))
+        popt,pcov = curve_fit(bfit,data,Bvals,p0=[1]*(SieveSlitFit.global_x+1)*(SieveSlitFit.global_a+1)*(SieveSlitFit.global_y+1))
+        print("Fit parameters: ")
         print(popt)
         def local_b_fit(x,a,y):
             return bfit([x,a,y],*popt)
         self.fit = local_b_fit
-        print
         for row in self.data_holes:
             X=row[:3]
-            print X,bfit(X,*popt)
+            #print X,bfit(X,*popt)
 
     def plot_global_fit(self):
         for i,x in enumerate(self.x):
@@ -209,11 +201,11 @@ def bfit(var,*c):
     x,a,y = var
     total = 0
     counter = 0
-    for i in range(0,SieveSlitFit.global_degree+1):
+    for i in range(0,SieveSlitFit.global_x+1):
         sum1 = 0
-        for j in range(0,SieveSlitFit.global_degree+1):
+        for j in range(0,SieveSlitFit.global_a+1):
             sum2 = 0
-            for k in range(0,SieveSlitFit.global_degree+1):
+            for k in range(0,SieveSlitFit.global_y+1):
                 sum2 += c[counter]*pow(y,k)
                 counter+=1
             sum1+=sum2*pow(a,j)
@@ -233,6 +225,5 @@ if __name__=="__main__":
     fitter = SieveSlitFit(args.input)
     #fitter.degree_y = 1
     #fitter.fit_y_dependence()
-    SieveSlitFit.global_degree = 2
     fitter.global_fit()
     fitter.plot_global_fit()
